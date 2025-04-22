@@ -2,8 +2,14 @@
 
 @Author: Jaume Hurtado, Daniel Robles
 
-#SISTEMA PER LA GESTIÓ D'INCIDÈNCIES EN DIFERENTS DEPARTAMENTS D'UNA EMPRESA
+# SISTEMA PER LA GESTIÓ D'INCIDÈNCIES EN DIFERENTS DEPARTAMENTS D'UNA EMPRESA
 
-@Diagrames
-Esquema de pantalles
+## Diagrames
+### Diagrama de casos
+![Diagramacasos.png](diagrames/Diagramacasos.png)
+
+### Esquema E/R de la BBDD
+![esquemaER.png](diagrames/esquemaER.png)
+
+### Esquema de pantalles
 ![esquemapantalles.png](diagrames/esquemapantalles.png)
