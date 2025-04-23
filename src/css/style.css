@@ -17,6 +17,19 @@ img {
     width: 150px;
 }
 
+.fletxa {
+    position: fixed;
+    left: 20px;
+    color: #bebebe;
+    text-decoration: none;
+    font-size: 28px;
+    z-index: 1000;
+}
+  
+.fletxa:hover {
+    color: #dcdcdc;
+}
+
 section {
     margin: 0;
     padding: 0;
@@ -62,7 +75,6 @@ section {
 
 .boto1:hover {
     background-color: #dcdcdc;
-
     color: #4a4a4a;
 }
 
@@ -70,3 +82,4 @@ section {
     background-color: #4f6c77;
     color: #ffffff;
 }
+
