@@ -12,6 +12,7 @@ header {
     align-items: center;
     z-index: 1;
 }
+
 img {
     width: 150px;
 }
@@ -36,6 +37,9 @@ section {
     width: 90%;
     max-width: 400px;
     margin-right: 5px;
+    height: 300px;
+    align-content: center;
+    justify-content: center;
 }
   
 .boto1 {
@@ -55,4 +59,14 @@ section {
     background-color: #607d8b;
     color: #ffffff;
 }
-  
+
+.boto1:hover {
+    background-color: #dcdcdc;
+
+    color: #4a4a4a;
+}
+
+.nou:hover {
+    background-color: #4f6c77;
+    color: #ffffff;
+}
