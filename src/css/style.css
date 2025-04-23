@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
+body {
+    font-family: Arial, sans-serif;
+}
 header {
     padding-top: 20px;
     position: fixed;
@@ -12,6 +15,19 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 1;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #607d8b;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
     z-index: 1;
 }
 
@@ -35,12 +51,11 @@ img {
 section {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
     background-color: #f5f5fa;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 98vh;
 }
 
 .contenidor {
@@ -51,16 +66,19 @@ section {
     text-align: center;
     width: 90%;
     max-width: 400px;
-    margin-right: 5px;
-    height: 300px;
+    margin-right: 10px;
+    height: 270px;
     align-content: center;
     justify-content: center;
+}
+
+.contenidor h2, .contenidor p {
+    margin-bottom: 30px;
 }
   
 .boto1 {
     display: block;
     width: 100%;
-    margin: 10px 0;
     padding: 12px;
     font-size: 16px;
     border: none;
@@ -69,9 +87,8 @@ section {
     background-color: #bebebe;
     color: #646464;
 }
-
-a {
-    text-decoration: none;
+#admins .boto1 {
+    margin: 20px 0;
 }
 
 .nou {
@@ -89,3 +106,35 @@ a {
     color: #ffffff;
 }
 
+a, #submit {
+    text-decoration: none;
+}
+
+#formulari {
+    height: fit-content;
+}
+#formulari h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    text-align: left;
+}
+
+form label,
+form input,
+form textarea {
+    display: block;
+    width: 100%;
+    margin: 2px 0;
+    text-align: left;
+}
+
+form input,
+form textarea {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}

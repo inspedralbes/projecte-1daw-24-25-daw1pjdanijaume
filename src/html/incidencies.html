@@ -1,26 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ca">
+
 <head>
- <meta charset="UTF-8">
- <meta http-equiv="X-UA-Compatible" content="IE=edge">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Document</title>
- <link rel="stylesheet" href="normalize.css">
- <link rel="stylesheet" href="incidencies.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="normalize.css">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
- <div id="contenidor">
-     <h2>Incidència</h2>
-     <form action="action.php" method="post">
-     <label for="departament">Departament:</label><br>
-   <input type="text" id="departament" name="departament" placeholder="Logística">
-   <br><br>
-   <label for="descripcio">Descripció de la incidència:</label><br>
-   <textarea name="descripcio" id="descripcio" type="text" rows="5" cols="50" placeholder="Descripció"></textarea>
-   <br><br>
-   <input type="submit" id="submit" value="Enviar">
-     </form>
- </div>
- 
+  <header>
+    <a href="https://www.institutpedralbes.cat/">
+      <img src="../img/logo.png" alt="Ins Pedralbes">
+    </a>
+  </header>
+  <section>
+    <a href="../../index.html" class="fletxa">
+      <span class="material-icons">arrow_back</span>
+    </a>
+    <div class="contenidor" id="formulari">
+      <h2>Incidència</h2>
+      <form action="../php/action.php" method="post">
+        <label for="departament">Departament:</label><br>
+        <input type="text" id="departament" name="departament" placeholder="Logística">
+        <br><br>
+        <label for="descripcio">Descripció de la incidència:</label><br>
+        <textarea name="descripcio" id="descripcio" type="text" placeholder="Descripció"></textarea>
+        <br><br>
+        <button class="boto1 nou" type="submit">Enviar</button>
+      </form>
+    </div>
+  </section>
+  <footer>
+    <p>Daniel Robles    |   Jaume Hurtado</p>
+</footer>
 </body>
 </html>
