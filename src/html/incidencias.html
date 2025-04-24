@@ -1,49 +1,47 @@
 <!DOCTYPE html>
 <html lang="ca">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="normalize.css">
   <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../css/styleLog.css">
 </head>
-
 <body>
   <header>
     <a href="https://www.institutpedralbes.cat/">
       <img src="../img/logo.png" alt="Ins Pedralbes">
     </a>
   </header>
-  <section>
-    <a href="../../index.html" class="fletxa">
+
+  <section class="seccion-central">
+    <a href="../../index.html" class="flecha-atras">
       <span class="material-icons">arrow_back</span>
     </a>
-    <div class="container incidencies">
-      <div class="container-form">
+    <div class="contenedor-principal incidencies">
+      <div class="contenedor-formulario">
         <form action="../php/action.php" method="post">
           <h2>Incidència</h2>
-          <div class="container-input">
+          <div class="campo-input">
             <ion-icon name="layers-outline"></ion-icon>
             <input type="text" id="departament" name="departament" placeholder="Departament">
           </div>
-          <div class="container-input">
+          <div class="campo-input">
             <ion-icon name="reader-outline"></ion-icon>
-            <input name="descripcio" type="text" placeholder="Descripció"></input>
+            <input name="descripcio" type="text" placeholder="Descripció" />
           </div>
           <br><br>
-          <button class="button" type="submit">Enviar</button>
+          <button class="boton" type="submit">Enviar</button>
         </form>
       </div>
     </div>
   </section>
+
   <footer>
     <p>Daniel Robles    |   Jaume Hurtado</p>
-</footer>
+  </footer>
 
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

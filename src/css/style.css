@@ -1,13 +1,24 @@
+/* Fuente y reset general */
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     font-family: "Open Sans", sans-serif;
-    
 }
+
 body {
+    width: 100%;
+    height: 100vh;
     background-color: #f5f5fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+/* Cabecera y pie de página */
 header {
     padding-top: 20px;
     position: fixed;
@@ -40,7 +51,8 @@ img {
     width: 150px;
 }
 
-.fletxa {
+/* Flecha de regreso */
+.flecha-atras {
     position: fixed;
     left: 20px;
     color: #bebebe;
@@ -48,12 +60,13 @@ img {
     font-size: 28px;
     z-index: 1000;
 }
-  
-.fletxa:hover {
+
+.flecha-atras:hover {
     color: #dcdcdc;
 }
 
-section {
+/* Sección principal */
+.seccion-central {
     margin: 0;
     padding: 0;
     display: flex;
@@ -62,7 +75,102 @@ section {
     height: 98vh;
 }
 
-.contenidor {
+/* Contenedor genérico */
+.contenedor-principal {
+    width: 800px;
+    height: 500px;
+    display: flex;
+    position: relative;
+    background-color: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0,0,0, 0.3);
+}
+
+.contenedor-principal.incidencies {
+    width: 600px;
+    height: 400px;
+}
+
+.contenedor-formulario {
+    width: 100%;
+    overflow: hidden;
+}
+
+.contenedor-formulario form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.5s ease-in;
+}
+
+.contenedor-formulario h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.contenedor-formulario span {
+    font-size: 12px;
+    margin-bottom: 15px;
+}
+
+.campo-input {
+    width: 300px;
+    height: 40px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 0 15px;
+    background-color: #eeeeee;
+}
+
+.campo-input input {
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 100%;
+    background-color: inherit;
+}
+
+.contenedor-formulario a {
+    color: black;
+    font-size: 14px;
+    margin-bottom: 20px;
+    margin-top: 5px;
+}
+
+.boton {
+    width: 170px;
+    height: 45px;
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    background-color: #607d8b;
+    color: white;
+}
+
+.boton-secundario {
+    background-color: #bebebe;
+    color: #646464;
+}
+
+.boton:hover {
+    background-color: #4f6c77;
+}
+
+.boton-secundario:hover {
+    background-color: #dcdcdc;
+    color: #4a4a4a;
+}
+
+/* Formularios adicionales */
+.formulario-basico {
     background-color: #ffffff;
     padding: 30px;
     border-radius: 10px;
@@ -76,69 +184,81 @@ section {
     justify-content: center;
 }
 
-.contenidor h2, .contenidor p {
+.formulario-basico h2,
+.formulario-basico p {
     margin-bottom: 30px;
 }
-  
-.boto1 {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: #bebebe;
-    color: #646464;
-}
-#admins .boto1 {
-    margin: 20px 0;
-}
 
-.nou {
-    background-color: #607d8b;
-    color: #ffffff;
-}
-
-.boto1:hover {
-    background-color: #dcdcdc;
-    color: #4a4a4a;
-}
-
-.nou:hover {
-    background-color: #4f6c77;
-    color: #ffffff;
-}
-
-a, #submit {
-    text-decoration: none;
-}
-
-#formulari {
-    height: fit-content;
-}
-#formulari h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-form {
+.formulario-basico form {
     text-align: left;
 }
 
-form label,
-form input,
-form textarea {
+.formulario-basico form label,
+.formulario-basico form input,
+.formulario-basico form textarea {
     display: block;
     width: 100%;
     margin: 2px 0;
     text-align: left;
 }
 
-form input,
-form textarea {
+.formulario-basico form input,
+.formulario-basico form textarea {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+}
+
+.titulo-sitio {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    margin-left: 20px;
+}
+
+.menu-navegacion a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #607d8b;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.menu-navegacion a:hover {
+    color: #4f6c77;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #607d8b;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 5px;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #cfd8dc;
 }
