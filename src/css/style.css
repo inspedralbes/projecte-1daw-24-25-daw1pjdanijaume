@@ -1,7 +1,12 @@
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
+* {
+    font-family: "Open Sans", sans-serif;
+    
+}
 body {
-    font-family: Arial, sans-serif;
+    background-color: #f5f5fa;
 }
 header {
     padding-top: 20px;
@@ -51,7 +56,6 @@ img {
 section {
     margin: 0;
     padding: 0;
-    background-color: #f5f5fa;
     display: flex;
     justify-content: center;
     align-items: center;

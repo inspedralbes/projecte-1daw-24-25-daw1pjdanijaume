@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/styleLog.css">
+</head>
+<body>
+    <header>
+        <a href="https://www.institutpedralbes.cat/">
+            <img src="../img/logo.png" alt="Ins Pedralbes">
+        </a>
+    </header>
+    <a href="../../index.html" class="fletxa">
+        <span class="material-icons">arrow_back</span>
+      </a>
+    <div class="container login">
+        <div class="container-form">
+            <form class="sign-in">
+                <h2>Iniciar sessió</h2>
+                <span>Utilitza el teu usuari i contrasenya</span>
+                <div class="container-input">
+                    <ion-icon name="person-outline"></ion-icon>
+                    <input type="text" placeholder="Usuari">
+                </div>
+                <div class="container-input">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <input type="password" placeholder="Contrasenya">
+                </div>
+                <a href="#">Has oblidat la teva contrasenya?</a>
+                <button class="button">INICIAR SESSIÓ</button>
+            </form>
+        </div>
+        <div class="container-form">
+            <form class="sign-up">
+                <h2>Registrar-se</h2>
+                <span>Utilitza les credencials donades</span>
+                <div class="container-input">
+                    <ion-icon name="person-outline"></ion-icon>
+                    <input type="text" placeholder="Usuari">
+                </div>
+                <div class="container-input">
+                    <ion-icon name="keypad-outline"></ion-icon>
+                    <input type="text" placeholder="Codi de validació">
+                </div>
+                <div class="container-input">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <input type="password" placeholder="Contrasenya">
+                </div>
+                <button class="button">REGISTRAR-SE</button>
+            </form>
+        </div>
+        <div class="container-welcome">
+            <div class="welcome-sign-up welcome">
+                <h3>Benvingut</h3>
+                <p>Ingresi les seves dades per accedir a totes les incidències</p>
+                <button class="button" id="btn-sign-up">Registrar-se</button>
+            </div>
+            <div class="welcome-sign-in welcome">
+                <h3>Hola</h3>
+                <p>Registrat com a nou tècnic</p>
+                <button class="button" id="btn-sign-in">Iniciar Sessió</button>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>Daniel Robles    |   Jaume Hurtado</p>
+    </footer>
+
+    <script src="../script/scriptLog.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

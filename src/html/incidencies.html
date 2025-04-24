@@ -8,6 +8,7 @@
   <title>Document</title>
   <link rel="stylesheet" href="normalize.css">
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/styleLog.css">
 </head>
 
 <body>
@@ -20,21 +21,29 @@
     <a href="../../index.html" class="fletxa">
       <span class="material-icons">arrow_back</span>
     </a>
-    <div class="contenidor" id="formulari">
-      <h2>Incidència</h2>
-      <form action="../php/action.php" method="post">
-        <label for="departament">Departament:</label><br>
-        <input type="text" id="departament" name="departament" placeholder="Logística">
-        <br><br>
-        <label for="descripcio">Descripció de la incidència:</label><br>
-        <textarea name="descripcio" id="descripcio" type="text" placeholder="Descripció"></textarea>
-        <br><br>
-        <button class="boto1 nou" type="submit">Enviar</button>
-      </form>
+    <div class="container incidencies">
+      <div class="container-form">
+        <form action="../php/action.php" method="post">
+          <h2>Incidència</h2>
+          <div class="container-input">
+            <ion-icon name="layers-outline"></ion-icon>
+            <input type="text" id="departament" name="departament" placeholder="Departament">
+          </div>
+          <div class="container-input">
+            <ion-icon name="reader-outline"></ion-icon>
+            <input name="descripcio" type="text" placeholder="Descripció"></input>
+          </div>
+          <br><br>
+          <button class="button" type="submit">Enviar</button>
+        </form>
+      </div>
     </div>
   </section>
   <footer>
     <p>Daniel Robles    |   Jaume Hurtado</p>
 </footer>
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
