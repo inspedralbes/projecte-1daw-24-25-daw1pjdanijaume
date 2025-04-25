@@ -262,3 +262,52 @@ footer {
 .footer-links a:hover {
     color: #cfd8dc;
 }
+
+/* MODO OSCURO */
+.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.dark-mode header,
+.dark-mode footer {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+.dark-mode .contenedor-principal,
+.dark-mode .formulario-basico {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .campo-input {
+  background-color: #2a2a2a;
+}
+
+.dark-mode .campo-input input {
+  color: #ffffff;
+}
+
+.dark-mode .boton {
+  background-color: #37474f;
+}
+
+.dark-mode .boton:hover {
+  background-color: #546e7a;
+}
+
+.dark-mode .bienvenida {
+  background-color: #263238;
+}
+
+.dark-mode .menu-navegacion a,
+.dark-mode .footer-links a {
+  color: #b0bec5;
+}
+
+.dark-mode .menu-navegacion a:hover,
+.dark-mode .footer-links a:hover {
+  color: #eceff1;
+}

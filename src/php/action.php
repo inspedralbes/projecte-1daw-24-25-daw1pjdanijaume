@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($stmt->execute()) {
             
-            header("Location: confirmacion.html");
+            header("Location: confirmacio.html");
             exit;
         } else {
             echo "No s'ha pogut registrar la incidència.";

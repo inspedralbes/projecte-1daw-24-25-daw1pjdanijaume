@@ -8,3 +8,15 @@ btnSignIn.addEventListener("click", ()=>{
 btnSignUp.addEventListener("click", ()=>{
     container.classList.add("toggle");
 });
+
+// Al cargar
+if (localStorage.getItem("modo-oscuro") === "true") {
+    document.body.classList.add("dark-mode");
+  }
+  
+  // Al hacer clic
+  toggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    localStorage.setItem("modo-oscuro", document.body.classList.contains("dark-mode"));
+  });
+  
