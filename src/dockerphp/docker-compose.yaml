@@ -1,0 +1,39 @@
+services:
+  web:
+    #image: php:apache
+    build:
+      context: ./images
+      dockerfile: Dockerfile_php
+    ports:
+      - "8080:80"
+    volumes:
+      - ./php:/var/www/html
+    environment:
+      VAR1: "estic al docker-compose"
+      VAR2: ${VAR2}
+    depends_on:
+      - db
+
+  db:
+    image: mysql:9.3
+    environment:
+      MYSQL_ROOT_PASSWORD: passwordDeRootQueNoShaDeFerServirMai
+      # MYSQL_DATABASE: a24danrobmar_projecte
+      MYSQL_USER: a24danrobmar_projecte
+      MYSQL_PASSWORD: ^IkT-?4(D9NvLxEh
+      LANG: C.UTF-8
+    #      - "3306:3306"
+
+    # La carpeta de mysql ha d'estar al .gitignore per no pujar-la al repositori
+    volumes:
+      - ./db_data:/var/lib/mysql
+      - ./db_init:/docker-entrypoint-initdb.d
+
+
+  # i les credencials són les del mysql (per que "simplement" es connecta al mysql)
+  adminer:
+    image: adminer
+    ports:
+      - "8081:8080"
+    depends_on:
+      - db

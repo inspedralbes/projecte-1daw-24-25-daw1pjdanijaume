@@ -1,0 +1,36 @@
+SET NAMES utf8mb4;
+
+CREATE DATABASE IF NOT EXISTS a24danrobmar_projecte
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+GRANT ALL PRIVILEGES ON a24danrobmar_projecte.* TO 'usuari'@'%';
+FLUSH PRIVILEGES;
+
+USE a24danrobmar_projecte;
+
+
+CREATE TABLE Incidencies (
+    ID_Incidencia INT(11) PRIMARY KEY AUTO_INCREMENT,
+    Departament VARCHAR(255) COLLATE utf8mb4_general_ci NOT NULL,
+    Data_Inici DATE NOT NULL DEFAULT CURDATE(),
+    Descripcio TEXT COLLATE utf8mb4_general_ci NOT NULL,
+    Prioritat ENUM('Alta', 'Mitja', 'Baixa') COLLATE utf8mb4_general_ci DEFAULT NULL,
+    Tipologia VARCHAR(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+    Resolta TINYINT(1) DEFAULT 0,
+    ID_Tecnic INT(11) DEFAULT NULL
+);
+
+CREATE TABLE Actuacions (
+    ID_Actuacio INT(11) PRIMARY KEY AUTO_INCREMENT,
+    ID_Incidencia INT(11) NOT NULL,
+    Data_Actuacio DATE NOT NULL DEFAULT CURDATE(),
+    Descripcio TEXT COLLATE utf8mb4_general_ci NOT NULL,
+    Temps INT(11) NOT NULL,
+    VisibleUsuari TINYINT(1) DEFAULT 1
+);
+
+CREATE TABLE Tecnics (
+    ID_Tecnic INT(11) PRIMARY KEY AUTO_INCREMENT,
+    Nom_Tecnic VARCHAR(255) COLLATE utf8mb4_general_ci NOT NULL
+);
