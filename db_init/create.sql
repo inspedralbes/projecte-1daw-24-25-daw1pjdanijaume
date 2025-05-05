@@ -13,7 +13,7 @@ USE incidencies;
 CREATE TABLE Incidencies (
     ID_Incidencia INT(11) PRIMARY KEY AUTO_INCREMENT,
     Departament VARCHAR(255) COLLATE utf8mb4_general_ci NOT NULL,
-    Data_Inici DATE NOT NULL DEFAULT SYSDATE(),
+    Data_Inici DATETIME NOT NULL DEFAULT NOW(),
     Descripcio TEXT COLLATE utf8mb4_general_ci NOT NULL,
     Prioritat ENUM('Alta', 'Mitja', 'Baixa') COLLATE utf8mb4_general_ci DEFAULT NULL,
     Tipologia VARCHAR(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE Incidencies (
 CREATE TABLE Actuacions (
     ID_Actuacio INT(11) PRIMARY KEY AUTO_INCREMENT,
     ID_Incidencia INT(11) NOT NULL,
-    Data_Actuacio DATE NOT NULL DEFAULT SYSDATE(),
+    Data_Actuacio DATETIME NOT NULL DEFAULT NOW(),
     Descripcio TEXT COLLATE utf8mb4_general_ci NOT NULL,
     Temps INT(11) NOT NULL,
     VisibleUsuari TINYINT(1) DEFAULT 1
