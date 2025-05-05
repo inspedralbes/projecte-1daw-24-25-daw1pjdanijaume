@@ -1,5 +1,7 @@
 <?php
 
+require_once "connexio.php";
+
 $servername = "db";
 $username = "usuari";
 $password = "paraula_de_pas";
