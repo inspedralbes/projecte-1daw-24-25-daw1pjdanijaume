@@ -7,23 +7,17 @@ $username = "usuari";
 $password = "paraula_de_pas";
 $dbname = "incidencies";
 
-try {
-    $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("No s'ha pogut connectar a la base de dades pel següent error: " . $e->getMessage());
-}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $departamento = $_POST["departament"] ?? null;
-    $descripcion = $_POST["descripcio"] ?? null;
+    $Departament = $_POST["Departament"] ?? null;
+    $Descripcio = $_POST["Descripcio"] ?? null;
 
-    if ($departamento && $descripcion) {
-        $query = "INSERT INTO registro_incidencias (departamento, descripcion, fecha) VALUES (:departamento, :descripcion, NOW())";
+    if ($Departament && $Descripcio) {
+        $query = "INSERT INTO Incidencies (Departament, Descripcio, Data_Inici) VALUES (:Departament, :Descripcio, NOW())";
         $stmt = $pdo->prepare($query);
 
-        $stmt->bindParam(":departamento", $departamento);
-        $stmt->bindParam(":descripcion", $descripcion);
+        $stmt->bindParam(":Departament", $Departament);
+        $stmt->bindParam(":Descripcio", $Descripcio);
 
         if ($stmt->execute()) {
             
