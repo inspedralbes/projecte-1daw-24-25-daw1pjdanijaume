@@ -30,7 +30,6 @@ services:
       - ./db_init:/docker-entrypoint-initdb.d
 
 
-  # i les credencials són les del mysql (per que "simplement" es connecta al mysql)
   adminer:
     image: adminer
     ports:
