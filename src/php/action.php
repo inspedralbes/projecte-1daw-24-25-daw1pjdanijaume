@@ -1,6 +1,6 @@
 <?php
 
-$servername = " ";
+$servername = "";
 $username = " ";
 $password = " ";
 $dbname = " ";
