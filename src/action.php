@@ -2,11 +2,6 @@
 
 require_once "connexio.php";
 
-$servername = "db";
-$username = "usuari";
-$password = "paraula_de_pas";
-$dbname = "incidencies";
-
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Departament = $_POST["Departament"] ?? null;
