@@ -7,7 +7,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./php:/var/www/html
+      - ./src:/var/www/html
     environment:
       VAR1: "estic al docker-compose"
       VAR2: ${VAR2}
@@ -18,9 +18,8 @@ services:
     image: mysql:9.3
     environment:
       MYSQL_ROOT_PASSWORD: passwordDeRootQueNoShaDeFerServirMai
-      # MYSQL_DATABASE: a24danrobmar_projecte
-      MYSQL_USER: a24danrobmar_projecte
-      MYSQL_PASSWORD: ^IkT-?4(D9NvLxEh
+      MYSQL_USER: usuari
+      MYSQL_PASSWORD: paraula_de_pas
       LANG: C.UTF-8
     #      - "3306:3306"
 
