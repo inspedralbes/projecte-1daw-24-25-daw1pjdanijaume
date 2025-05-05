@@ -68,6 +68,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               </a>
             </div>
             -->
+            <div class="formulario-basico" id="login-acces">
+              <h2>Llistat</h2>
+              <p>a.</p>
+              <a href="./llistat.php">
+                <button class="boton">Accedir</button>
+              </a>
+            </div>
           </section>
 
           <footer>

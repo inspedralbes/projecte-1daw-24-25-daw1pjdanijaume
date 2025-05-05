@@ -11,10 +11,10 @@
     <h1>Llistat d'incidencies</h1>
     <?php
 
-    $servername = "localhost";
-    $username = "a24danrobmar_projecte";
-    $password = "^IkT-?4(D9NvLxEh";
-    $dbname = "a24danrobmar_projecte";
+    $servername = "db";
+    $username = "usuari";
+    $password = "^paraula_de_pas";
+    $dbname = "incidencies";
 
     try {
         $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
