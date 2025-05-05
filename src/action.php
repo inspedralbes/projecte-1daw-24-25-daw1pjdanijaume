@@ -1,9 +1,9 @@
 <?php
 
-$servername = "";
-$username = " ";
-$password = " ";
-$dbname = " ";
+$servername = "db";
+$username = "usuari";
+$password = "paraula_de_pas";
+$dbname = "incidencies";
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $password);
