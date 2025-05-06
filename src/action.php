@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="formulario-basico" id="incidencies">
               <h2>Vols fer una incidència?</h2>
               <p>Completa el següent formulari.</p>
-              <a href="./action.php">
+              <a href="./crear.php">
                 <button class="boton">Incidència</button>
               </a>
             </div>
