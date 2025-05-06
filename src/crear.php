@@ -2,14 +2,6 @@
 
 require "connexio.php";
 
-
-try {
-    $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("No s'ha pogut connectar a la base de dades pel següent error: " . $e->getMessage());
-}
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $departamento = $_POST["departament"] ?? null;
     $descripcion = $_POST["descripcio"] ?? null;
@@ -39,67 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <link rel="stylesheet" href="css/style.css">
         </head>
         <body>
-          <header>
-            <a href="https://www.institutpedralbes.cat/">
-              <img src="img/logo.png" alt="Ins Pedralbes">
-            </a>
-            <h1 class="titulo-sitio">Gestió d'Incidències</h1>
-            <!--<nav class="menu-navegacion">
-              <a href="../../index.html">Inici</a>
-              <a href="login.html">Login</a>
-              <a href="incidencias.html">Incidències</a>
-            </nav>-->
-          </header>
-
-          <section class="seccion-central">
-            <div class="formulario-basico" id="incidencies">
-              <h2>Vols fer una incidència?</h2>
-              <p>Completa el següent formulari.</p>
-              <a href="./action.php">
-                <button class="boton">Incidència</button>
-              </a>
-            </div>
-            <!--
-            <div class="formulario-basico" id="login-acces">
-              <h2>Accés tècnics</h2>
-              <p>Inicia sessió o registra’t amb les teves credencials.</p>
-              <a href="html/login.html">
-                <button class="boton">Accedir</button>
-              </a>
-            </div>
-            -->
-            <div class="formulario-basico" id="login-acces">
-              <h2>Llistat</h2>
-              <p>a.</p>
-              <a href="./llistat.php">
-                <button class="boton">Accedir</button>
-              </a>
-            </div>
-          </section>
-
-          <footer>
-            <p>&copy; 2025 Daniel Robles & Jaume Hurtado</p>
-            <div class="footer-links">
-              <a href="#">Contacte</a>
-            </div>
-          </footer>
-
-        </body>
-        </html>
-        <?php
-    }
-}
-?>
-<!DOCTYPE html>
-<html lang="ca">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
   <header>
     <a href="https://www.institutpedralbes.cat/">
         <img src="../img/logo.png" alt="Ins Pedralbes">
@@ -118,14 +49,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </a>
     <div class="contenedor-principal incidencies">
       <div class="contenedor-formulario">
-        <form action="../action.php" method="post">
+        <form action="./crear.php" method="post">
           <h2>Incidència</h2>
           <div class="campo-input">
-            <!--<ion-icon name="layers-outline"></ion-icon>-->
+            <ion-icon name="layers-outline"></ion-icon>
             <input type="text" id="departament" name="departament" placeholder="Departament">
           </div>
           <div class="campo-input">
-            <!--<ion-icon name="reader-outline"></ion-icon>-->
+            <ion-icon name="reader-outline"></ion-icon>
             <input name="descripcio" type="text" placeholder="Descripció" />
           </div>
           <br><br>
@@ -145,4 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
-</html>
+        </html>
+        <?php
+    }
+}
+?>
