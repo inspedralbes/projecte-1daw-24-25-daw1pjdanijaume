@@ -2,35 +2,44 @@
 
 require "connexio.php";
 
+//try {
+//    $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
+//  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+//} catch (PDOException $e) {
+//    die("No s'ha pogut connectar a la base de dades pel següent error: " . $e->getMessage());
+//}
+//
+//$sqlScript = file_get_contents("create.sql");
+//if ($conn->multi_query($sqlScript)) {
+//    echo "Base de datos y tablas creadas exitosamente.";
+//} else {
+//    echo "Error al ejecutar el script SQL: " . $conn->error;
+//}
 
-try {
-    $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("No s'ha pogut connectar a la base de dades pel següent error: " . $e->getMessage());
-}
+//$conn->close();
+//$db_check = $conn->query("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$dbname'");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $departamento = $_POST["departament"] ?? null;
-    $descripcion = $_POST["descripcio"] ?? null;
+    $Departament = $_POST["Departament"] ?? null;
+    $Descripcio = $_POST["Descripcio"] ?? null;
 
-    if ($departamento && $descripcion) {
-        $query = "INSERT INTO registro_incidencias (departamento, descripcion, fecha) VALUES (:departamento, :descripcion, NOW())";
-        $stmt = $pdo->prepare($query);
+    if ($Departament && $Descripcio) {
+       $stmt = $pdo->prepare("INSERT INTO Incidencies (Departament, Data_Inici, Descripcio) VALUES (:departament, NOW(), :descripcio)");
+            $stmt->bindParam(":departament", $Departament, PDO::PARAM_INT);
+            $stmt->bindParam(":descripcio", $Descripcio, PDO::PARAM_STR);
 
-        $stmt->bindParam(":departamento", $departamento);
-        $stmt->bindParam(":descripcion", $descripcion);
+            if ($stmt->execute()) {
+                header("Location: ./html/confirmacio.html");
+                exit();
+            } else {
+                echo "Error: " . $stmt->error;
+            }
 
-        if ($stmt->execute()) {
-            
-            header("Location: confirmacio.html");
-            exit;
-        } else {
-            echo "No s'ha pogut registrar la incidència.";
-        }
+            $stmt->close();
+            $conn->close();
     } else {
         ?>
-        <!DOCTYPE html>
+        <!--<!DOCTYPE html>
         <html lang="ca">
         <head>
           <meta charset="UTF-8">
@@ -44,11 +53,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <img src="img/logo.png" alt="Ins Pedralbes">
             </a>
             <h1 class="titulo-sitio">Gestió d'Incidències</h1>
-            <!--<nav class="menu-navegacion">
+            <nav class="menu-navegacion">
               <a href="../../index.html">Inici</a>
               <a href="login.html">Login</a>
               <a href="incidencias.html">Incidències</a>
-            </nav>-->
+            </nav>
           </header>
 
           <section class="seccion-central">
@@ -59,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <button class="boton">Incidència</button>
               </a>
             </div>
-            <!--
+
             <div class="formulario-basico" id="login-acces">
               <h2>Accés tècnics</h2>
               <p>Inicia sessió o registra’t amb les teves credencials.</p>
@@ -67,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <button class="boton">Accedir</button>
               </a>
             </div>
-            -->
+
             <div class="formulario-basico" id="login-acces">
               <h2>Llistat</h2>
               <p>a.</p>
@@ -85,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </footer>
 
         </body>
-        </html>
+        </html>-->
         <?php
     }
 }
@@ -122,11 +131,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <h2>Incidència</h2>
           <div class="campo-input">
             <!--<ion-icon name="layers-outline"></ion-icon>-->
-            <input type="text" id="departament" name="departament" placeholder="Departament">
+            <input type="text" id="departament" name="Departament" placeholder="Departament">
           </div>
           <div class="campo-input">
             <!--<ion-icon name="reader-outline"></ion-icon>-->
-            <input name="descripcio" type="text" placeholder="Descripció" />
+            <input name="Descripcio" type="text" placeholder="Descripció" />
           </div>
           <br><br>
           <button class="boton" type="submit">Enviar</button>

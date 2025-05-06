@@ -1,6 +1,7 @@
 <?php
 
-require_once "connexio.php";
+require "connexio.php";
+include "crear.php";
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
