@@ -33,17 +33,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <link rel="stylesheet" href="css/style.css">
         </head>
         <body>
-          <header>
+          <!--<header>
             <a href="https://www.institutpedralbes.cat/">
               <img src="img/logo.png" alt="Ins Pedralbes">
             </a>
             <h1 class="titulo-sitio">Gestió d'Incidències</h1>
-            <!--<nav class="menu-navegacion">
+            <nav class="menu-navegacion">
               <a href="../../index.html">Inici</a>
               <a href="login.html">Login</a>
               <a href="incidencias.html">Incidències</a>
-            </nav>-->
-          </header>
+            </nav>
+          </header>-->
 
           <section class="seccion-central">
             <div class="formulario-basico" id="incidencies">
