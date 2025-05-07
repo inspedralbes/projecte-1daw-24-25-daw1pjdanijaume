@@ -219,10 +219,10 @@ img {
     margin-right: 10px;
     align-content: center;
     justify-content: center;
-    margin-top: 30%;
-    height: 90%;
+    margin-top: 5%;
     overflow:auto;
-    margin-bottom: 30%;
+    max-height:80%;
+    height:auto;
 }
 
 table,td, tr{
