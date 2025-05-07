@@ -31,7 +31,7 @@ require_once 'connexio.php';
         <a href="../index.html" class="flecha-atras">
             <span class="material-icons">arrow_back</span>
         </a>
-        <div class="formulario-basico">
+        <div class="formulario-lista">
             <h2>Llistat d'incidencies</h2>
             <?php
 
@@ -39,11 +39,15 @@ require_once 'connexio.php';
             $stmt = $pdo->query($sql);
 
             if ($stmt->rowCount() > 0) {
-            echo "<ul>";
+            echo "<table>";
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<li>ID: " . $row["ID_incidencia"] . " - Descripcio: " . htmlspecialchars($row["Descripcio"]) . "</li>";
+                    echo "<tr><td>ID: " . $row["ID_incidencia"] . " - Descripcio: " . htmlspecialchars($row["Descripcio"]) . "</td>";
+                    echo "<td><form action='esborrar.php' method='post' style='display:inline;'>
+                                                <input type='hidden' name='IncidenciaID' value='" . $row["ID_incidencia"] . "' />
+                                                <button class='boton' type='submit' onclick='return confirm(\"Estàs segur que vols eliminar aquesta incidència?\")'>Eliminar</button>
+                                              </form></td></tr>";
                 }
-                echo "</ul>";
+                echo "</table>";
             } else {
                 echo "<p>No hi ha dades a mostrar.</p>";
             }

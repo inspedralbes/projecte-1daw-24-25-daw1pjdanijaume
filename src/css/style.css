@@ -210,6 +210,26 @@ img {
     box-sizing: border-box;
 }
 
+.formulario-lista {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 80%;
+    margin-right: 10px;
+    height: 80%;
+    align-content: center;
+    justify-content: center;
+    display: flex;
+}
+
+table,td, tr{
+border: black solid 1px;
+}
+td{
+padding: 10px;}
+
 .titulo-sitio {
     font-size: 20px;
     font-weight: 600;
