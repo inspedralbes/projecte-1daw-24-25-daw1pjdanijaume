@@ -216,12 +216,13 @@ img {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     text-align: center;
-    width: 80%;
     margin-right: 10px;
-    height: 80%;
     align-content: center;
     justify-content: center;
-    display: flex;
+    margin-top: 30%;
+    height: 90%;
+    overflow:auto;
+    margin-bottom: 30%;
 }
 
 table,td, tr{

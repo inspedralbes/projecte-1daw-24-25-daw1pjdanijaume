@@ -45,11 +45,15 @@ require_once 'connexio.php';
                     echo "<td><form action='esborrar.php' method='post' style='display:inline;'>
                                                 <input type='hidden' name='IncidenciaID' value='" . $row["ID_incidencia"] . "' />
                                                 <button class='boton' type='submit' onclick='return confirm(\"Estàs segur que vols eliminar aquesta incidència?\")'>Eliminar</button>
-                                              </form></td></tr>";
+                                              </form></td>";
+                    echo "<td><form action='esborrar.php' method='post' style='display:inline;'>
+                                                                         <input type='hidden' name='IncidenciaID' value='" . $row["ID_incidencia"] . "' />
+                                                                         <button class='boton' type='submit' onclick='return confirm(\"Estàs segur que vols eliminar aquesta incidència?\")'>Eliminar</button>
+                                                                       </form></td></tr>";
                 }
                 echo "</table>";
             } else {
-                echo "<p>No hi ha dades a mostrar.</p>";
+                echo "<br><p>No hi ha dades a mostrar.</p><br>";
             }
 
             ?>
