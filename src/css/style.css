@@ -25,6 +25,7 @@ header {
     top: 0;
     left: 0;
     width: 100%;
+    height: 10%;
     padding: 1rem 9%;
     background-color: #ffffff;
     filter: drop-shadow(10px);
@@ -39,6 +40,7 @@ footer {
     bottom: 0;
     left: 0;
     width: 100%;
+    height: 5%;
     background-color: #607d8b;
     color: white;
     text-align: center;
@@ -219,17 +221,18 @@ img {
     margin-right: 10px;
     align-content: center;
     justify-content: center;
-    margin-top: 5%;
     overflow:auto;
     max-height:75%;
     height:auto;
 }
 
 table,td, tr{
-border: black solid 1px;
+    border: black solid 1px;
+    margin: 1.2em;
 }
 td{
-padding: 10px;}
+    padding: 10px;
+}
 
 .titulo-sitio {
     font-size: 20px;

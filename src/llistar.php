@@ -35,17 +35,13 @@ require_once 'connexio.php';
             <h2>Llistat d'incidencies</h2>
             <?php
 
-            $sql = "SELECT ID_incidencia, Descripcio FROM Incidencies";
+            $sql = "SELECT ID_incidencia, Departament, Descripcio, Data_Inici FROM Incidencies";
             $stmt = $pdo->query($sql);
 
             if ($stmt->rowCount() > 0) {
-            echo "<table>";
+            echo "<table><tr><td>ID</td><td>Departament</td><td>Descripció</td><td>Hora</td><td></td></tr>";
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<tr><td>ID: " . $row["ID_incidencia"] . " - Descripcio: " . htmlspecialchars($row["Descripcio"]) . "</td>";
-                    echo "<td><form action='esborrar.php' method='post' style='display:inline;'>
-                                                <input type='hidden' name='IncidenciaID' value='" . $row["ID_incidencia"] . "' />
-                                                <button class='boton' type='submit' onclick='return confirm(\"Estàs segur que vols eliminar aquesta incidència?\")'>Eliminar</button>
-                                              </form></td>";
+                    echo "<tr><td>" . $row["ID_incidencia"] . "</td><td>" . htmlspecialchars($row["Departament"]) . "</td><td>" . htmlspecialchars($row["Descripcio"]) . "</td><td>" . $row["Data_Inici"] . "</td>";
                     echo "<td><form action='esborrar.php' method='post' style='display:inline;'>
                                                                          <input type='hidden' name='IncidenciaID' value='" . $row["ID_incidencia"] . "' />
                                                                          <button class='boton' type='submit' onclick='return confirm(\"Estàs segur que vols eliminar aquesta incidència?\")'>Eliminar</button>
