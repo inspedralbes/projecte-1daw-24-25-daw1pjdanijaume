@@ -316,3 +316,7 @@ footer {
 #centrado{
     text-align: center;
 }
+
+.inline{
+    display: inline;
+}

@@ -129,9 +129,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <div class="contenedor-formulario">
         <form action="../action.php" method="post">
           <h2>Incidència</h2>
-          <div class="campo-input">
-            <!--<ion-icon name="layers-outline"></ion-icon>-->
-            <input type="text" id="departament" name="Departament" placeholder="Departament">
+            <div class="in-line">
+                <label for="Departament">Departament:</label>
+                <select class="campo-input" id="departament" name="Departament" required>
+                    <option value="Contabilitat">Contabilitat</option>
+                    <option value="Administracio">Administració</option>
+                    <option value="Produccio">Producció</option>
+                    <option value="Manteniment">Manteniment</option>
+                    <option value="Informatica">Informàtica</option>
+                    <option value="Suport tecnic">Suport tècnic</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Atencio al client">Atenció al client</option>
+                </select>
           </div>
           <div class="campo-input">
             <!--<ion-icon name="reader-outline"></ion-icon>-->

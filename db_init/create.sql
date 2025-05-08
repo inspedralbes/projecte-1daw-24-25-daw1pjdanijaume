@@ -12,7 +12,7 @@ USE incidencies;
 
 CREATE TABLE Incidencies (
     ID_Incidencia INT(11) PRIMARY KEY AUTO_INCREMENT,
-    Departament VARCHAR(255) COLLATE utf8mb4_general_ci NOT NULL,
+    Departament ENUM('Contabilitat', 'Administració', 'Producció', 'Manteniment', 'Informàtica', 'Suport Tècnic', 'Marketing', 'Atenció al client') COLLATE utf8mb4_general_ci NOT NULL,
     Data_Inici DATETIME NOT NULL DEFAULT NOW(),
     Descripcio TEXT COLLATE utf8mb4_general_ci NOT NULL,
     Prioritat ENUM('Alta', 'Mitja', 'Baixa') COLLATE utf8mb4_general_ci DEFAULT NULL,
