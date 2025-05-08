@@ -65,11 +65,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </section>
 
           <footer>
-            <p>&copy; 2025 Daniel Robles & Jaume Hurtado</p>
-            <div class="footer-links">
-              <a href="#">Contacte</a>
-            </div>
-          </footer>
+    <p>&copy; 2025 Daniel Robles & Jaume Hurtado</p>
+  </footer>
 
         </body>
         </html>

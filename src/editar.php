@@ -103,9 +103,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["actualizar"])) {
 </div>
 <footer>
     <p>&copy; 2025 Daniel Robles & Jaume Hurtado</p>
-    <div class="footer-links">
-      <a href="#">Contacte</a>
-    </div>
   </footer>
 </body>
 </html>

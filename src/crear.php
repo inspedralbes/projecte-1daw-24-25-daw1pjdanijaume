@@ -143,7 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </select>
           </div>
           <div class="campo-input">
-            <!--<ion-icon name="reader-outline"></ion-icon>-->
+            <ion-icon name="reader-outline"></ion-icon>
             <input name="Descripcio" type="text" placeholder="Descripció" />
           </div>
           <br><br>
@@ -155,9 +155,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   <footer>
     <p>&copy; 2025 Daniel Robles & Jaume Hurtado</p>
-    <div class="footer-links">
-      <a href="#">Contacte</a>
-    </div>
   </footer>
 
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

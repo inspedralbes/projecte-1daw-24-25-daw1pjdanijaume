@@ -58,9 +58,6 @@ require_once 'connexio.php';
 
     <footer>
     <p>&copy; 2025 Daniel Robles & Jaume Hurtado</p>
-    <div class="footer-links">
-      <a href="#">Contacte</a>
-    </div>
   </footer>
 </body>
 
