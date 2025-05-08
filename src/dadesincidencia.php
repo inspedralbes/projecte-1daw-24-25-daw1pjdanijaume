@@ -41,10 +41,10 @@ require_once 'connexio.php';
             if ($stmt->rowCount() > 0) {
             echo "<table>";
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<tr><td>ID: " . $row["ID_Incidencia"] . " - Departament: " . htmlspecialchars($row["Departament"]) . " - Data_Inici: " . htmlspecialchars($row["Data_Inici"]) . " - Descripcio: " . htmlspecialchars($row["Descripcio"]) . " - Prioritat: " . ($row["Prioritat"] !== null ? htmlspecialchars($row["Prioritat"]) : "Sense determinar") . " - Tipologia: " . ($row["Tipologia"] !== null ? htmlspecialchars($row["Tipologia"]) : "Sense determinar") . " - Resolta: " . ($row["Resolta"] !== null ? htmlspecialchars($row["Resolta"]) : "No resolta") . " - ID_Tecnic: " . ($row["ID_Tecnic"] !== null ? htmlspecialchars($row["ID_Tecnic"]) : "Sense tècnic") . "</td>";
+                    echo "<tr><td>ID: " . $row["ID_Incidencia"] . ", Departament: " . htmlspecialchars($row["Departament"]) . ", Data_Inici: " . htmlspecialchars($row["Data_Inici"]) . ", Descripcio: " . htmlspecialchars($row["Descripcio"]) . ", Prioritat: " . ($row["Prioritat"] !== null ? htmlspecialchars($row["Prioritat"]) : "Sense determinar") . ", Tipologia: " . ($row["Tipologia"] !== null ? htmlspecialchars($row["Tipologia"]) : "Sense determinar") . ", Resolta: " . ($row["Resolta"] !== null ? htmlspecialchars($row["Resolta"]) : "No resolta") . ", ID_Tecnic: " . ($row["ID_Tecnic"] !== null ? htmlspecialchars($row["ID_Tecnic"]) : "Sense tècnic") . "</td>";
                     echo "<td><form action='editar.php' method='post' style='display:inline;'>
                                                                          <input type='hidden' name='IncidenciaID' value='" . $row["ID_Incidencia"] . "' />
-                                                                         <button class='boton' type='submit' onclick='return confirm(\"Estàs segur que vols eliminar aquesta incidència?\")'>Eliminar</button>
+                                                                         <button class='boton' type='submit' onclick='return confirm(\"Estàs segur que vols editar aquesta incidència?\")'>Editar</button>
                                                                        </form></td></tr>";
                 }
                 echo "</table>";

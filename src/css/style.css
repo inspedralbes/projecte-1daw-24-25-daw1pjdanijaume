@@ -155,6 +155,7 @@ img {
     margin-top: 10px;
     background-color: #607d8b;
     color: white;
+    align-self: center;
 }
 
 .boton-secundario {
@@ -213,6 +214,20 @@ img {
 }
 
 .formulario-lista {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin-right: 10px;
+    align-content: center;
+    justify-content: center;
+    overflow:auto;
+    max-height:75%;
+    height:auto;
+}
+
+.formulario-editar {
     background-color: #ffffff;
     padding: 30px;
     border-radius: 10px;
@@ -285,4 +300,19 @@ footer {
 
 .footer-links a:hover {
     color: #cfd8dc;
+}
+
+.textarea-fixa{
+    resize:none;
+    min-height: 15px;
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+#formulario-editar{
+    text-align: left;
+}
+
+#centrado{
+    text-align: center;
 }
