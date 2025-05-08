@@ -46,6 +46,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["actualizar"])) {
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
+        <header>
+            <a href="https://www.institutpedralbes.cat/">
+                <img src="../img/logo.png" alt="Ins Pedralbes">
+            </a>
+            <h1 class="titulo-sitio">Gestió d'Incidències</h1>
+            <nav class="menu-navegacion">
+                <a href="../index.html">Inici</a>
+                <a href="login.html">Login</a>
+                <a href="incidencias.html">Incidències</a>
+            </nav>
+        </header>
+
+        <section class="seccion-central">
+            <a href="../dadesincidencia.php" class="flecha-atras">
+                <span class="material-icons">arrow_back</span>
+            </a>
     <div class="formulario-editar">
     <h2>Editar Incidència</h2><br>
     <form id="formulario-editar" action="editar.php" method="post">
@@ -79,5 +95,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["actualizar"])) {
         </div>
     </form>
 </div>
+<footer>
+    <p>&copy; 2025 Daniel Robles & Jaume Hurtado</p>
+    <div class="footer-links">
+      <a href="#">Contacte</a>
+    </div>
+  </footer>
 </body>
 </html>
