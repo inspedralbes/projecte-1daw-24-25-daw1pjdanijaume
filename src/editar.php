@@ -4,7 +4,6 @@ require_once 'connexio.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["IncidenciaID"])) {
     $id = $_POST["IncidenciaID"];
 
-    // Obtener datos actuales de la incidencia
     $sql = "SELECT * FROM Incidencies WHERE ID_Incidencia = ?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$id]);
@@ -20,18 +19,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["IncidenciaID"])) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["actualizar"])) {
-    // Capturar datos editados del formulario
-    $Departament = $_POST["Departament"];
-    $Descripcio = $_POST["Descripcio"];
     $Prioritat = $_POST["Prioritat"];
     $Tipologia = $_POST["Tipologia"];
     $Resolta = $_POST["Resolta"];
     $Id_Tecnic = $_POST["ID_Tecnic"];
 
-    // Actualizar base de datos
-    $sql_update = "UPDATE Incidencies SET Departament=?, Descripcio=?, Prioritat=?, Tipologia=?, Resolta=?, ID_Tecnic=? WHERE ID_Incidencia=?";
+    if (!is_numeric($Id_Tecnic)) {
+    ?>
+        <link rel="stylesheet" href="../css/style.css">
+        <div><p>L'ID del tècnic ha de ser un número.</p></div><br>
+        <div><button class="boton" onclick="window.history.back();">Tornar enrere</button></div>
+        <?php
+        exit;
+    }
+
+    $sql_update = "UPDATE Incidencies SET Prioritat=?, Tipologia=?, Resolta=?, ID_Tecnic=? WHERE ID_Incidencia=?";
     $stmt_update = $pdo->prepare($sql_update);
-    $stmt_update->execute([$Departament, $Descripcio, $Prioritat, $Tipologia, $Resolta, $Id_Tecnic, $id]);
+    $stmt_update->execute([$Prioritat, $Tipologia, $Resolta, $Id_Tecnic, $id]);
 
     header("Location: index.html");
     exit;
@@ -69,7 +73,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["actualizar"])) {
         <p>ID de la incidència : <?= htmlspecialchars($incidencia["ID_Incidencia"]) ?></p><br>
         <p>Data d'inici: <?= htmlspecialchars($incidencia["Data_Inici"]) ?></p><br>
         <p>Departament: <?= htmlspecialchars($incidencia["Departament"]) ?></p><br>
+        <input type="hidden" name="Departament" value="<?= htmlspecialchars($incidencia["Departament"]) ?>">
         <p>Descripcio: <?= htmlspecialchars($incidencia["Descripcio"]) ?></p><br>
+        <input type="hidden" name="Descripcio" value="<?= htmlspecialchars($incidencia["Descripcio"]) ?>">
 
         <label for="Prioritat">Prioritat:</label>
         <select name="Prioritat">
@@ -79,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["actualizar"])) {
         </select><br><br>
 
         <label for="Tipologia">Tipologia:</label>
-        <input type="text" name="Tipologia" value="<?= htmlspecialchars($incidencia["Tipologia"]) ?>"><br><br>
+        <input type="text" name="Tipologia" value="<?= htmlspecialchars($incidencia["Tipologia"] ?? '') ?>"><br><br>
 
         <label for="Resolta">Resolta:</label>
         <select name="Resolta">
@@ -88,10 +94,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["actualizar"])) {
         </select><br><br>
 
         <label for="ID_Tecnic">ID Tècnic:</label>
-        <input type="numeric" name="ID_Tecnic" value="<?= htmlspecialchars($incidencia["ID_Tecnic"]) ?>"><br>
+        <input type="text" name="ID_Tecnic" value="<?= htmlspecialchars($incidencia["ID_Tecnic"] ?? '') ?>"><br><br>
 
         <div id="centrado">
-        <button class='boton' id="centrado" type="submit" name="actualizar">Guardar Canvis</button>
+        <button class="boton" id="centrado" type="submit" name="actualizar">Guardar canvis</button>
         </div>
     </form>
 </div>
