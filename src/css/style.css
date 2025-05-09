@@ -163,7 +163,7 @@ img {
     color: #646464;
 }
 
-.boton:hover, #btn-aplicar {
+.boton:hover, #btn-aplicar:hover {
     background-color: #4f6c77;
 }
 
@@ -215,16 +215,32 @@ img {
 
 .formulario-lista {
     background-color: #ffffff;
-    padding: 30px;
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    margin-right: 10px;
-    align-content: center;
-    justify-content: center;
-    overflow:auto;
-    max-height:75%;
-    height:auto;
+    text-align: left;
+    margin-top: 120px; /* espacio desde header */
+    margin-bottom: 80px; /* espacio hasta footer */
+    max-height: calc(100vh - 200px); /* espacio total disponible */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.formulario-lista h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    margin-left: 1.2em;
+    position: sticky;
+    top: 0;
+    background-color: #ffffff;
+    padding: 10px 0;
+    z-index: 1;
+}
+
+.formulario-lista .tabla-scrollable {
+    overflow-y: auto;
+    flex: 1;
 }
 
 .formulario-editar {
@@ -242,11 +258,20 @@ img {
 }
 
 table,td, tr{
-    border: black solid 1px;
     margin: 1.2em;
 }
-td{
-    padding: 10px;
+
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+td, th {
+    border: 1px solid black;
+    padding: 10px 20px; /* más espacio horizontal */
+    text-align: center; /* centrado horizontal */
+    vertical-align: middle;
+    word-wrap: break-word;
 }
 
 .titulo-sitio {
@@ -354,7 +379,7 @@ footer {
       z-index: 1000;
       box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
     }
-
+    
     #panel-filtros.visible {
       display: flex;
     }
@@ -376,9 +401,4 @@ footer {
 
     #btn-aplicar {
       margin-top: auto;
-      padding: 0.5rem;
-      background: #4f6c77;
-      color: white;
-      border: none;
-      cursor: pointer;
     }

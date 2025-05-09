@@ -64,25 +64,35 @@
   </section>
 
   <div id="panel-filtros">
-    <div class="panel-titulo">Ordre</div>
-    <div class="panel-opcion">
-      <label><input type="radio" name="ordre" value="ascendent" checked> Ascendent</label>
+    <div class="tabla-scrollable">
+      <div class="panel-titulo">Ordre</div>
+      <div class="panel-opcion">
+        <label><input type="radio" name="ordre" value="ascendent" checked> Ascendent</label>
+      </div>
+      <div class="panel-opcion">
+        <label><input type="radio" name="ordre" value="descendent"> Descendent</label>
+      </div>
+  
+      <div class="panel-titulo">Departament</div>
+      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Tot" checked> Tot</label></div>
+      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Contabilitat"> Contabilitat</label></div>
+      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Administració"> Administració</label></div>
+      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Producció"> Producció</label></div>
+      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Manteniment"> Manteniment</label></div>
+      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Informàtica"> Informàtica</label></div>
+      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Suport tècnic"> Suport tècnic</label></div>
+      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Marketing"> Marketing</label></div>
+      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Atenció al client"> Atenció al client</label></div>
+  
+      <div class="panel-titulo">Prioritat</div>
+      <div class="panel-opcion"><label><input type="checkbox" class="filtro-pri" value="Tot" checked> Tot</label></div>
+      <div class="panel-opcion"><label><input type="checkbox" class="filtro-pri" value="No assignada"> No assignada</label></div>
+      <div class="panel-opcion"><label><input type="checkbox" class="filtro-pri" value="Baixa"> Baixa</label></div>
+      <div class="panel-opcion"><label><input type="checkbox" class="filtro-pri" value="Mitjana"> Mitjana</label></div>
+      <div class="panel-opcion"><label><input type="checkbox" class="filtro-pri" value="Alta"> Alta</label></div>
     </div>
-    <div class="panel-opcion">
-      <label><input type="radio" name="ordre" value="descendent"> Descendent</label>
-    </div>
 
-    <div class="panel-titulo">Departament</div>
-    <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Todo" checked> Tot</label></div>
-    <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Departament1"> Departament1</label></div>
-    <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Departament2"> Departament2</label></div>
-
-    <div class="panel-titulo">Prioritat</div>
-    <div class="panel-opcion"><label><input type="checkbox" class="filtro-pri" value="Baja"> Baixa</label></div>
-    <div class="panel-opcion"><label><input type="checkbox" class="filtro-pri" value="Mitjana"> Mitjana</label></div>
-    <div class="panel-opcion"><label><input type="checkbox" class="filtro-pri" value="Alta"> Alta</label></div>
-
-    <button id="btn-aplicar">Actualitzar</button>
+    <button class="boton"  id="btn-aplicar">Actualitzar</button>
   </div>
 
   <footer>
@@ -119,6 +129,21 @@
             });
           } else if (checkbox.value !== "Todo" && checkbox.checked) {
             checkboxes.forEach(cb => {
+              if (cb.value === "Todo") cb.checked = false;
+            });
+          }
+        });
+      });
+      // Lógica Todo / otros en filtros de prioridad
+      const checkboxes2 = document.querySelectorAll(".filtro-pri");
+      checkboxes2.forEach(checkbox => {
+        checkbox.addEventListener("change", () => {
+          if (checkbox.value === "Todo" && checkbox.checked) {
+            checkboxes2.forEach(cb => {
+              if (cb !== checkbox) cb.checked = false;
+            });
+          } else if (checkbox.value !== "Todo" && checkbox.checked) {
+            checkboxes2.forEach(cb => {
               if (cb.value === "Todo") cb.checked = false;
             });
           }
