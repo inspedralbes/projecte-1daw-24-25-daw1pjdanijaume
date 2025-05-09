@@ -23,10 +23,7 @@
     </nav>
   </header>
 
-  <section class="seccion-central">
-    <a href="../index.html" class="flecha-atras">
-      <span class="material-icons">arrow_back</span>
-    </a>
+    <section class="seccion-central">
     <div class="formulario-lista">
       <div class="encabezado-lista">
         <h2>Llista d'incidències</h2>
@@ -35,122 +32,154 @@
 
       <div class="tabla-scrollable">
         <?php
-        $sql = "SELECT ID_incidencia, Departament, Descripcio,
-            DATE_FORMAT(Data_Inici, '%d/%m/%Y') AS Data,
-            DATE_FORMAT(Data_Inici, '%H:%i') AS Hora
-            FROM Incidencies";
-        $stmt = $pdo->query($sql);
+        // Captura de filtros
+        $ordre = $_GET['ordre'] ?? 'ascendent';
+        $departaments = $_GET['departament'] ?? ['Tot'];
+        $prioritats = $_GET['prioritat'] ?? ['Tot'];
+
+        $where = [];
+        $params = [];
+
+        if (!in_array("Tot", $departaments)) {
+            $placeholders = implode(',', array_fill(0, count($departaments), '?'));
+            $where[] = "Departament IN ($placeholders)";
+            $params = array_merge($params, $departaments);
+        }
+
+        if (!in_array("Tot", $prioritats)) {
+            $placeholders = implode(',', array_fill(0, count($prioritats), '?'));
+            $where[] = "Prioritat IN ($placeholders)";
+            $params = array_merge($params, $prioritats);
+        }
+
+        $sql = "SELECT ID_incidencia, Departament, Descripcio, Prioritat,
+                DATE_FORMAT(Data_Inici, '%d/%m/%Y') AS Data,
+                DATE_FORMAT(Data_Inici, '%H:%i') AS Hora
+                FROM Incidencies";
+
+        if ($where) {
+            $sql .= " WHERE " . implode(" AND ", $where);
+        }
+
+        $sql .= ($ordre === 'descendent') ? " ORDER BY Data_Inici DESC" : " ORDER BY Data_Inici ASC";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
 
         if ($stmt->rowCount() > 0) {
-          echo "<table><tr><th>ID</th><th>Departament</th><th>Descripció</th><th>Data</th><th>Hora</th><th></th></tr>";
+          echo "<table><tr><th>ID</th><th>Departament</th><th>Descripció</th><th>Prioritat</th><th>Data</th><th>Hora</th><th></th></tr>";
           while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo "<tr><td>" . $row["ID_incidencia"] . "</td>
-              <td>" . htmlspecialchars($row["Departament"]) . "</td>
-              <td>" . htmlspecialchars($row["Descripcio"]) . "</td>
-              <td>" . $row["Data"] . "</td>
-              <td>" . $row["Hora"] . "</td>";
-            echo "<td><form action='esborrar.php' method='post' style='display:inline;'>
-              <input type='hidden' name='IncidenciaID' value='" . $row["ID_incidencia"] . "' />
-              <button class='boton' type='submit' onclick='return confirm(\"Estàs segur que vols eliminar aquesta incidència?\")'>Eliminar</button>
-              </form></td></tr>";
+            echo "<tr><td>{$row['ID_incidencia']}</td>
+                      <td>{$row['Departament']}</td>
+                      <td>{$row['Descripcio']}</td>
+                      <td>{$row['Prioritat']}</td>
+                      <td>{$row['Data']}</td>
+                      <td>{$row['Hora']}</td>
+                      <td>
+                        <form action='esborrar.php' method='post'>
+                          <input type='hidden' name='IncidenciaID' value='{$row['ID_incidencia']}' />
+                          <button class='boton' type='submit' onclick='return confirm(\"Segur que vols eliminar?\")'>Eliminar</button>
+                        </form>
+                      </td></tr>";
           }
           echo "</table>";
         } else {
-          echo "<br><p>No hi ha dades a mostrar.</p><br>";
+          echo "<p>No hi ha dades que coincideixin amb el filtre.</p>";
         }
         ?>
       </div>
     </div>
   </section>
 
-  <div id="panel-filtros">
+  <!-- Panel de filtros -->
+  <form id="panel-filtros" method="GET">
     <div class="tabla-scrollable">
       <div class="panel-titulo">Ordre</div>
-      <div class="panel-opcion">
-        <label><input type="radio" name="ordre" value="ascendent" checked> Ascendent</label>
-      </div>
-      <div class="panel-opcion">
-        <label><input type="radio" name="ordre" value="descendent"> Descendent</label>
-      </div>
-  
+      <div class="panel-opcion"><label><input type="radio" name="ordre" value="ascendent" <?= ($ordre === 'ascendent') ? 'checked' : '' ?>> Ascendent</label></div>
+      <div class="panel-opcion"><label><input type="radio" name="ordre" value="descendent" <?= ($ordre === 'descendent') ? 'checked' : '' ?>> Descendent</label></div>
+
       <div class="panel-titulo">Departament</div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Tot" checked> Tot</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Contabilitat"> Contabilitat</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Administració"> Administració</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Producció"> Producció</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Manteniment"> Manteniment</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Informàtica"> Informàtica</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Suport tècnic"> Suport tècnic</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Marketing"> Marketing</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Atenció al client"> Atenció al client</label></div>
-  
+      <?php
+      $dptes = ["Tot", "Contabilitat", "Administració", "Producció", "Manteniment", "Informàtica", "Suport tècnic", "Marketing", "Atenció al client"];
+      foreach ($dptes as $d) {
+        $checked = (in_array($d, $departaments)) ? 'checked' : '';
+        echo "<div class='panel-opcion'><label><input type='checkbox' name='departament[]' value='$d' $checked> $d</label></div>";
+      }
+      ?>
+
       <div class="panel-titulo">Prioritat</div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-pri" value="Tot" checked> Tot</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-pri" value="No assignada"> No assignada</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-pri" value="Baixa"> Baixa</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-pri" value="Mitjana"> Mitjana</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-pri" value="Alta"> Alta</label></div>
+      <?php
+      $prioritats = ["Tot", "No assignada", "Baixa", "Mitjana", "Alta"];
+      foreach ($prioritats as $p) {
+        $checked = (in_array($p, $_GET['prioritat'] ?? ['Tot'])) ? 'checked' : '';
+        echo "<div class='panel-opcion'><label><input type='checkbox' name='prioritat[]' value='$p' $checked> $p</label></div>";
+      }
+      ?>
     </div>
 
-    <button class="boton"  id="btn-aplicar">Actualitzar</button>
-  </div>
-
-  <footer>
-    <p>&copy; 2025 Daniel Robles & Jaume Hurtado</p>
-  </footer>
+    <button class="boton" id="btn-aplicar" type="submit">Actualitzar</button>
+  </form>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const btnFiltrar = document.getElementById("btn-filtrar");
-      const panelFiltros = document.getElementById("panel-filtros");
-
-      btnFiltrar.addEventListener("click", (e) => {
-        e.stopPropagation();
-        panelFiltros.classList.toggle("visible");
-        document.body.classList.toggle("panel-aberto");
-      });
-
-      document.addEventListener("click", (e) => {
-        if (panelFiltros.classList.contains("visible") &&
-          !panelFiltros.contains(e.target) &&
-          e.target !== btnFiltrar) {
-          panelFiltros.classList.remove("visible");
-          document.body.classList.remove("panel-abierto");
+    // Función para desmarcar todos los filtros de un grupo excepto el seleccionado
+    function deselectOthers(name, currentValue) {
+      const allCheckboxes = document.querySelectorAll(`input[name='${name}']`);
+      allCheckboxes.forEach(checkbox => {
+        if (checkbox.value !== currentValue) {
+          checkbox.checked = false;
         }
       });
+    }
 
-      // Lógica Todo / otros en filtros de departamento
-      const checkboxes = document.querySelectorAll(".filtro-dep");
-      checkboxes.forEach(checkbox => {
-        checkbox.addEventListener("change", () => {
-          if (checkbox.value === "Todo" && checkbox.checked) {
-            checkboxes.forEach(cb => {
-              if (cb !== checkbox) cb.checked = false;
-            });
-          } else if (checkbox.value !== "Todo" && checkbox.checked) {
-            checkboxes.forEach(cb => {
-              if (cb.value === "Todo") cb.checked = false;
-            });
+    // Lógica para desmarcar "Tot" cuando se selecciona otro filtro
+    function handleDeselection(event, filterName) {
+      if (event.target.value !== "Tot") {
+        const allCheckboxes = document.querySelectorAll(`input[name='${filterName}[]']`);
+        allCheckboxes.forEach(checkbox => {
+          if (checkbox.value === "Tot") {
+            checkbox.checked = false;
           }
         });
-      });
-      // Lógica Todo / otros en filtros de prioridad
-      const checkboxes2 = document.querySelectorAll(".filtro-pri");
-      checkboxes2.forEach(checkbox => {
-        checkbox.addEventListener("change", () => {
-          if (checkbox.value === "Todo" && checkbox.checked) {
-            checkboxes2.forEach(cb => {
-              if (cb !== checkbox) cb.checked = false;
-            });
-          } else if (checkbox.value !== "Todo" && checkbox.checked) {
-            checkboxes2.forEach(cb => {
-              if (cb.value === "Todo") cb.checked = false;
-            });
+      }
+    }
+
+    // Lógica para desmarcar todos los filtros cuando se selecciona "Tot"
+    function handleSelectAll(event, filterName) {
+      if (event.target.value === "Tot") {
+        const allCheckboxes = document.querySelectorAll(`input[name='${filterName}[]']`);
+        allCheckboxes.forEach(checkbox => {
+          if (checkbox.value !== "Tot") {
+            checkbox.checked = false;
           }
         });
+      }
+    }
+
+    // Aplicar la lógica de desmarcar filtros
+    document.querySelectorAll("input[name='departament[]']").forEach(checkbox => {
+      checkbox.addEventListener("change", function(event) {
+        handleDeselection(event, 'departament');
+        handleSelectAll(event, 'departament');
       });
+    });
+
+    document.querySelectorAll("input[name='prioritat[]']").forEach(checkbox => {
+      checkbox.addEventListener("change", function(event) {
+        handleDeselection(event, 'prioritat');
+        handleSelectAll(event, 'prioritat');
+      });
+    });
+
+    document.querySelectorAll("input[name='ordre']").forEach(radio => {
+      radio.addEventListener("change", function(event) {
+        deselectOthers('ordre', this.value);
+      });
+    });
+
+    document.getElementById("btn-filtrar").addEventListener("click", () => {
+      const panel = document.getElementById("panel-filtros");
+      panel.classList.toggle("visible");
     });
   </script>
 </body>
-
 </html>
