@@ -2,17 +2,21 @@
 require "connexio.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id_incident = $_POST["ID_Incidencia"] ?? null;
+    $ID_Incidencia = $_POST["ID_Incidencia"] ?? null;
 
-    if ($id_incident) {
-        $query = "SELECT * FROM Incidencies WHERE id = :id";
+    if ($ID_Incidencia) {
+        $query = "SELECT * FROM Incidencies WHERE ID_Incidencia = :ID_Incidencia";
         $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":ID_Incidencia", $id_incidencia, PDO::PARAM_INT);
+        $stmt->bindParam(":ID_Incidencia", $ID_Incidencia, PDO::PARAM_INT);
 
         if ($stmt->execute()) {
             $fila = $stmt->fetch(PDO::FETCH_ASSOC);
         }
     }
+    if ($fila) {
+        header("Location: actuacions.php?ID_Incidencia=" . $ID_Incidencia);
+        exit;
+        }
 }
 ?>
 
@@ -40,18 +44,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h2>Buscar Incidència</h2>
     <form action="" method="POST">
         <label for="id">Ingrese la ID de la incidència:</label>
-        <input type="number" name="id" id="id" required>
+        <input type="number" name="ID_Incidencia" id="ID_Incidencia" required>
         <button type="submit" class="boton">Buscar</button>
     </form>
     </div>
 </section>
 
-    <?php if (!empty($fila)): ?>
-        <h3>Detalls de la incidència</h3>
-        <p><strong>ID:</strong> <?= htmlspecialchars($fila['id']) ?></p>
-        <p><strong>Departament:</strong> <?= htmlspecialchars($fila['Departament']) ?></p>
-        <p><strong>Descripció:</strong> <?= htmlspecialchars($fila['Descripcio']) ?></p>
-        <p><strong>Data d'inici:</strong> <?= htmlspecialchars($fila['Data_Inici']) ?></p>
+    <?php if (!empty($fila)):
+        header("Location: actuacions.php?ID_Incidencia=" . $ID_Incidencia);
+                        exit;
+        ?>
     <?php elseif ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
         <p>No s'ha trobat cap incidència amb la ID proporcionada.</p>
     <?php endif; ?>
