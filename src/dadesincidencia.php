@@ -32,7 +32,7 @@ require_once 'connexio.php';
             <span class="material-icons">arrow_back</span>
         </a>
         <div class="formulario-lista">
-            <h2>Informació de les incidències</h2>
+            <h2 style="text-align: left;">Informació de les incidències</h2>
             <?php
 
             $sql = "SELECT * FROM Incidencies";
@@ -49,7 +49,7 @@ require_once 'connexio.php';
                 }
                 echo "</table>";
             } else {
-                echo "<br><p>No hi ha dades a mostrar.</p><br>";
+                echo '<br><p style="text-align: center;">No hi ha dades a mostrar.</p><br>';
             }
 
             ?>
