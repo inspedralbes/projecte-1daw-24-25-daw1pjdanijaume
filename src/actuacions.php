@@ -52,6 +52,8 @@ if ($ID_Incidencia) {
             ?>
         </p>
         <p><strong>ID_Tecnic:</strong> <?= isset($fila['ID_Tecnic']) && $fila['ID_Tecnic'] !== null ? htmlspecialchars($fila['ID_Tecnic']) : "Encara no assignat" ?></p>
+        <button class="boton" id="centrado" type="submit" name="actualizar">Afegir actuació</button>
+        <button class="boton" id="centrado" type="submit" name="actualizar">Tancar incidència</button>
     </div>
 </section>
 
