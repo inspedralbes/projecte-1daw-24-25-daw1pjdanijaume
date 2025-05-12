@@ -134,6 +134,7 @@
           }
         });
       });
+      // Lógica Todo / otros en filtros de prioridad
       const checkboxes2 = document.querySelectorAll(".filtro-pri");
       checkboxes2.forEach(checkbox => {
         checkbox.addEventListener("change", () => {
