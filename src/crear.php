@@ -22,17 +22,11 @@ require "connexio.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Departament = $_POST["Departament"] ?? null;
     $Descripcio = $_POST["Descripcio"] ?? null;
-    $Prioritat = $_POST["Prioritat"] ?? null;
 
     if ($Departament && $Descripcio) {
-      if (empty($Prioritat)) {
-        $Prioritat = "No assignada";
-      }
-       $stmt = $pdo->prepare("INSERT INTO Incidencies (Departament, Data_Inici, Descripcio, Prioritat) VALUES (:departament, NOW(), :descripcio, :prioritat)");
+       $stmt = $pdo->prepare("INSERT INTO Incidencies (Departament, Data_Inici, Descripcio) VALUES (:departament, NOW(), :descripcio)");
             $stmt->bindParam(":departament", $Departament, PDO::PARAM_STR);
             $stmt->bindParam(":descripcio", $Descripcio, PDO::PARAM_STR);
-            $stmt->bindParam(":prioritat", $Prioritat, PDO::PARAM_STR);
-
             if ($stmt->execute()) {
                 header("Location: ./html/confirmacio.html");
                 exit();
