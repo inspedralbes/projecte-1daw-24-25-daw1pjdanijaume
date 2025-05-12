@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Descripcio = $_POST["Descripcio"] ?? null;
 
     if ($Departament && $Descripcio) {
-        $query = "INSERT INTO Incidencies (Departament, Descripcio, Data_Inici) VALUES (:Departament, :Descripcio, NOW())";
+        $query = "INSERT INTO Incidencies (Departament, Descripcio, Data_Inici, Prioritat) VALUES (:Departament, :Descripcio, NOW(), 'No assignada')";
         $stmt = $pdo->prepare($query);
 
         $stmt->bindParam(":Departament", $Departament);
