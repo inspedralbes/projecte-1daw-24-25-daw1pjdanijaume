@@ -27,7 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
        $stmt = $pdo->prepare("INSERT INTO Incidencies (Departament, Data_Inici, Descripcio) VALUES (:departament, NOW(), :descripcio)");
             $stmt->bindParam(":departament", $Departament, PDO::PARAM_STR);
             $stmt->bindParam(":descripcio", $Descripcio, PDO::PARAM_STR);
-
             if ($stmt->execute()) {
                 header("Location: ./html/confirmacio.html");
                 exit();

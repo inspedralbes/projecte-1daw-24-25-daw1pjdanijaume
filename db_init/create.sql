@@ -15,7 +15,7 @@ CREATE TABLE Incidencies (
     Departament ENUM('Contabilitat', 'Administració', 'Producció', 'Manteniment', 'Informàtica', 'Suport Tècnic', 'Marketing', 'Atenció al client') COLLATE utf8mb4_general_ci NOT NULL,
     Data_Inici DATETIME NOT NULL DEFAULT NOW(),
     Descripcio TEXT COLLATE utf8mb4_general_ci NOT NULL,
-    Prioritat ENUM('Alta', 'Mitja', 'Baixa') COLLATE utf8mb4_general_ci DEFAULT NULL,
+    Prioritat ENUM('Alta', 'Mitja', 'Baixa', 'No assignada') COLLATE utf8mb4_general_ci DEFAULT 'No assignada',
     Tipologia VARCHAR(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
     Resolta TINYINT(1) DEFAULT 0,
     ID_Tecnic INT(11) DEFAULT NULL
