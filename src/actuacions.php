@@ -52,8 +52,14 @@ if ($ID_Incidencia) {
             ?>
         </p>
         <p><strong>ID_Tecnic:</strong> <?= isset($fila['ID_Tecnic']) && $fila['ID_Tecnic'] !== null ? htmlspecialchars($fila['ID_Tecnic']) : "Encara no assignat" ?></p>
-        <button class="boton" id="centrado" type="submit" name="actualizar">Afegir actuació</button>
-        <button class="boton" id="centrado" type="submit" name="actualizar">Tancar incidència</button>
+        <div class="centrado">
+        <a href="./afegirActuacio.php">
+               <button class="boton" id="centrado" type="submit" name="afegiractuacio">Afegir actuació</button>
+        </a>
+        </div><div class="centrado">
+        <a href="./tancarIncidencia.php">
+        <button class="boton" id="centrado" type="submit" name="tancar">Tancar incidència</button>
+        </div>
     </div>
 </section>
 
