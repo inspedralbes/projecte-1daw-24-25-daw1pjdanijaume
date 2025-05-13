@@ -9,6 +9,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["IncidenciaID"])) {
     $stmt->execute([$id]);
     $incidencia = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    if ($incidencia["Resolta"] == 2) {
+        echo "<p>Aquesta incidència està tancada i no es pot modificar.</p>";
+        exit;
+    }
+
     if (!$incidencia) {
         echo "Incidència no trobada.";
         exit;

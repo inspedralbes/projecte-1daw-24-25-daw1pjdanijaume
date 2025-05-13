@@ -1,6 +1,8 @@
 <?php
 require "connexio.php";
 
+$mensaje = null;
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ID_Incidencia = $_POST["ID_Incidencia"] ?? null;
 
@@ -8,20 +10,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $query = "SELECT * FROM Incidencies WHERE ID_Incidencia = :ID_Incidencia";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":ID_Incidencia", $ID_Incidencia, PDO::PARAM_INT);
+        $stmt->execute();
+        $fila = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($stmt->execute()) {
-            $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+     if (!$fila) {
+                $mensaje = "No s'ha trobat cap incidència amb la ID proporcionada.";
+            } else {
+                switch ($fila["Resolta"]) {
+                    case 0:
+                        $mensaje = "Aquesta incidència encara no està resolta.";
+                        break;
+                    case 1:
+                        header("Location: actuacions.php?ID_Incidencia=" . $ID_Incidencia);
+                        exit;
+                    case 2:
+                        $mensaje = "Aquesta incidència ja està tancada i no es pot modificar.";
+                        break;
+                    default:
+                        $mensaje = "Estat de l'incidència desconegut.";
+                }
+            }
         }
     }
-    if ($fila) {
-        header("Location: actuacions.php?ID_Incidencia=" . $ID_Incidencia);
-        exit;
-        }
-}
+
 ?>
 
 <!DOCTYPE html>
 <html lang="ca">
+    <head>
+        <meta charset="UTF-8">
+        <title>Buscar Incidència</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+<body>
  <header>
      <link rel="stylesheet" href="css/style.css">
     <a href="https://www.institutpedralbes.cat/">
@@ -35,31 +56,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </nav>
   </header>
 
-<body>
     <section class="seccion-central">
         <a href="../index.html" class="flecha-atras">
           <span class="material-icons">arrow_back</span>
         </a>
     <div class="formulario-basico">
     <h2>Buscar Incidència</h2>
-    <form action="" method="POST">
-        <label for="id">Ingrese la ID de la incidència:</label>
+    <form method="POST">
+        <label for="id">Introdueix l'ID de la incidència:</label>
         <input type="number" name="ID_Incidencia" id="ID_Incidencia" required>
+        <div class="centrado">
         <button type="submit" class="boton">Buscar</button>
+        <?php if ($mensaje): ?>
+                    <p><strong><?= htmlspecialchars($mensaje) ?></strong></p>
+                <?php endif; ?>
+        </div>
     </form>
     </div>
 </section>
 
-    <?php if (!empty($fila)):
-        header("Location: actuacions.php?ID_Incidencia=" . $ID_Incidencia);
-                        exit;
-        ?>
-    <?php elseif ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
-        <p>No s'ha trobat cap incidència amb la ID proporcionada.</p>
-    <?php endif; ?>
-
 </body>
-<footer>
-    <p>&copy; 2025 Daniel Robles & Jaume Hurtado</p>
-  </footer>
+
 </html>

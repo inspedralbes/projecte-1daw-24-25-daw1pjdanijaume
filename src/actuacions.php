@@ -22,7 +22,7 @@ if ($ID_Incidencia) {
     <a href="https://www.institutpedralbes.cat/">
         <img src="../img/logo.png" alt="Ins Pedralbes">
     </a>
-    <h1 class="titulo-sitio">Consulta d'ncidències</h1>
+    <h1 class="titulo-sitio">Consulta d'incidències</h1>
     <nav class="menu-navegacion">
       <a href="../index.html">Inici</a>
       <a href="login.html">Login</a>
@@ -38,15 +38,19 @@ if ($ID_Incidencia) {
     <div class="formulario-lista">
     <h3>Detalls de la incidència</h3><br>
         <p><strong>ID:</strong> <?= htmlspecialchars($fila['ID_Incidencia']) ?></p>
-        <p><strong>Data_Inici:</strong> <?= htmlspecialchars($fila['Data_Inici']) ?></p>
+        <p><strong>Data d'inici:</strong> <?= htmlspecialchars($fila['Data_Inici']) ?></p>
         <p><strong>Descripcio:</strong> <?= htmlspecialchars($fila['Descripcio']) ?></p>
         <p><strong>Prioritat:</strong> <?= isset($fila['Prioritat']) && $fila['Prioritat'] !== null ? htmlspecialchars($fila['Prioritat']) : "Encara no assignada" ?></p>
         <p><strong>Tipologia:</strong> <?= isset($fila['Tipologia']) && $fila['Tipologia'] !== null ? htmlspecialchars($fila['Tipologia']) : "Encara no assignada" ?></p>
-        <p><strong>Resolta:</strong>
+        <p><strong>Estat de lla incidència:</strong>
             <?php
             if ($fila['Resolta'] == 1) {
                 echo "Incidència resolta";
-            } else {
+            }
+            else if ($fila['Resolta'] == 2) {
+                            echo "Incidència tancada";
+            }
+            else {
                 echo "Incidència no resolta";
             }
             ?>
@@ -57,7 +61,7 @@ if ($ID_Incidencia) {
                <button class="boton" id="centrado" type="submit" name="afegiractuacio">Afegir actuació</button>
         </a>
         </div><div class="centrado">
-        <a href="./tancarIncidencia.php">
+        <a href="tancarIncidencia.php?ID_Incidencia=<?= htmlspecialchars($fila['ID_Incidencia']) ?>">
         <button class="boton" id="centrado" type="submit" name="tancar">Tancar incidència</button>
         </div>
     </div>

@@ -10,7 +10,7 @@ require_once 'connexio.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Llistat</title>
+    <title>Llistat de dades</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -39,11 +39,7 @@ require_once 'connexio.php';
 
             <div class="tabla-scrollable">
             <?php
-
-            
-
-            // Processar filtres
-        $ordre = $_GET['ordre'] ?? 'ASC';
+            $ordre = $_GET['ordre'] ?? 'ASC';
         $ordenarPer = $_GET['ordenar_per'] ?? 'ID_incidencia';
         $departaments = $_GET['departaments'] ?? [];
         $prioritats = $_GET['prioritats'] ?? [];
@@ -67,11 +63,11 @@ require_once 'connexio.php';
           $placeholders = implode(',', array_fill(0, count($prioritats), '?'));
           $where[] = "Prioritat IN ($placeholders)";
           $params = array_merge($params, $prioritats);
-        }
+        }   
 
-        $sql = "SELECT ID_incidencia, Departament, Prioritat, Descripcio,
+        $sql = "SELECT ID_incidencia, Departament, Prioritat, Descripcio, Tipologia, Resolta, ID_Tecnic, 
                 DATE_FORMAT(Data_Inici, '%d/%m/%Y') AS Data,
-                DATE_FORMAT(Data_Inici, '%H:%i') AS Hora, Tipologia, Resolta, ID_Tecnic
+                DATE_FORMAT(Data_Inici, '%H:%i') AS Hora
                 FROM Incidencies";
 
         if (!empty($where)) {
@@ -83,38 +79,22 @@ require_once 'connexio.php';
         $stmt = $pdo->prepare($sql);
         $stmt->execute($params);
 
-
-
-        /*$sql = "SELECT * FROM Incidencies";
-            $stmt = $pdo->query($sql);
-
-            if ($stmt->rowCount() > 0) {
-            echo "<table>";
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<tr><td>ID: " . $row["ID_Incidencia"] . ", Departament: " . htmlspecialchars($row["Departament"]) . ", Data_Inici: " . htmlspecialchars($row["Data_Inici"]) . ", Descripcio: " . htmlspecialchars($row["Descripcio"]) . ", Prioritat: " . ($row["Prioritat"] !== null ? htmlspecialchars($row["Prioritat"]) : "No assignada") . ", Tipologia: " . ($row["Tipologia"] !== null ? htmlspecialchars($row["Tipologia"]) : "Sense determinar") . ", Resolta: " . ($row["Resolta"] !== null ? htmlspecialchars($row["Resolta"]) : "No resolta") . ", ID_Tecnic: " . ($row["ID_Tecnic"] !== null ? htmlspecialchars($row["ID_Tecnic"]) : "Sense tècnic") . "</td>";
-                    echo "<td><form action='editar.php' method='post' style='display:inline;'>
-                                                                         <input type='hidden' name='IncidenciaID' value='" . $row["ID_Incidencia"] . "' />
-                                                                         <button class='boton' type='submit' onclick='return confirm(\"Estàs segur que vols editar aquesta incidència?\")'>Editar</button>
-                                                                       </form></td></tr>";
-                }
-                echo "</table>";
-            } else {
-                echo '<br><p style="text-align: center;">No hi ha dades a mostrar.</p><br>';
-            }*/
-            
         if ($stmt->rowCount() > 0) {
-          echo "<table><tr><th>ID</th><th>Departament</th><th>Prioritat</th><th>Descripció</th><th>Data</th><th>Hora</th><th></th></tr>";
+          echo "<table><tr><th>ID</th><th>Departament</th><th>Prioritat</th><th>Descripció</th><th>Data</th><th>Hora</th><th>Tipologia</th><th>Resolta?</th><th>ID Tècnic</th><th></th></tr>";
           while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             echo "<tr><td>{$row["ID_incidencia"]}</td>
                     <td>" . htmlspecialchars($row["Departament"]) . "</td>
                     <td>" . htmlspecialchars($row["Prioritat"]) . "</td>
                     <td>" . htmlspecialchars($row["Descripcio"]) . "</td>
                     <td>{$row["Data"]}</td>
-                    <td>{$row["Hora"]}</td>
+                    <td>{$row["Hora"]}</td> 
+                    <td>" . ($row["Tipologia"] !== null ? htmlspecialchars($row["Tipologia"]) : "Sense determinar") . "</td>
+                    <td>" . ($row["Resolta"] == 0 ? "No": "Sí") . "</td>
+                    <td>" . ($row["ID_Tecnic"] !== null ? htmlspecialchars($row["ID_Tecnic"]) : "Sense tècnic") . "</td>
                     <td>
-                      <form action='esborrar.php' method='post' style='display:inline;'>
+                      <form action='editar.php' method='post' style='display:inline;'>
                         <input type='hidden' name='IncidenciaID' value='{$row["ID_incidencia"]}' />
-                        <button class='boton' type='submit' onclick='return confirm(\"Estàs segur que vols eliminar aquesta incidència?\")'>Eliminar</button>
+                        <button class='boton' type='submit' onclick='return confirm(\"Estàs segur que vols editar aquesta incidència?\")'>Editar</button>
                       </form>
                     </td></tr>";
           }
@@ -122,12 +102,11 @@ require_once 'connexio.php';
         } else {
           echo "<br><p>No hi ha dades a mostrar.</p><br>";
         }
-        ?>
-      </div>
-    </div>
-  </section>
+            ?>
+        </div>
+    </section>
 
-  <form id="panel-filtros" method="GET">
+    <form id="panel-filtros" method="GET">
     <div class="tabla-scrollable">
       <div class="panel-titulo">Ordre</div>
       <div class="panel-opcion">
@@ -166,10 +145,9 @@ require_once 'connexio.php';
     <button class="boton" id="btn-aplicar" type="submit">Actualitzar</button>
   </form>
 
-  <footer>
+    <footer>
     <p>&copy; 2025 Daniel Robles & Jaume Hurtado</p>
   </footer>
-
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const btnFiltrar = document.getElementById("btn-filtrar");
@@ -190,7 +168,6 @@ require_once 'connexio.php';
         }
       });
 
-<<<<<<< HEAD
       const toggleGrupo = (grupoSelector) => {
         const checkboxes = document.querySelectorAll(grupoSelector);
         checkboxes.forEach(checkbox => {
@@ -205,35 +182,6 @@ require_once 'connexio.php';
               });
             }
           });
-=======
-      // Lógica Todo / otros en filtros de departamento
-      const checkboxes = document.querySelectorAll(".filtro-dep");
-      checkboxes.forEach(checkbox => {
-        checkbox.addEventListener("change", () => {
-          if (checkbox.value === "Todo" && checkbox.checked) {
-            checkboxes.forEach(cb => {
-              if (cb !== checkbox) cb.checked = false;
-            });
-          } else if (checkbox.value !== "Todo" && checkbox.checked) {
-            checkboxes.forEach(cb => {
-              if (cb.value === "Todo") cb.checked = false;
-            });
-          }
-        });
-      });
-      const checkboxes2 = document.querySelectorAll(".filtro-pri");
-      checkboxes2.forEach(checkbox => {
-        checkbox.addEventListener("change", () => {
-          if (checkbox.value === "Todo" && checkbox.checked) {
-            checkboxes2.forEach(cb => {
-              if (cb !== checkbox) cb.checked = false;
-            });
-          } else if (checkbox.value !== "Todo" && checkbox.checked) {
-            checkboxes2.forEach(cb => {
-              if (cb.value === "Todo") cb.checked = false;
-            });
-          }
->>>>>>> 72fcff3a1d3039e751ed932b7fa119c9a8bfee34
         });
       };
 
@@ -242,5 +190,4 @@ require_once 'connexio.php';
     });
   </script>
 </body>
-
 </html>

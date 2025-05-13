@@ -1,17 +1,38 @@
 <?php
 require "connexio.php";
 
+$ID_Incidencia = intval($_GET["ID_Incidencia"]);
+
+
+$query = "SELECT * FROM Incidencies WHERE ID_Incidencia = :ID_Incidencia";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":ID_Incidencia", $ID_Incidencia, PDO::PARAM_INT);
+$stmt->execute();
+
+
+$incidencia = $stmt->fetch(PDO::FETCH_ASSOC);
+
 $ID_Incidencia = $_GET["ID_Incidencia"] ?? null;
 
-if ($ID_Incidencia) {
-    $query = "SELECT * FROM Incidencies WHERE ID_Incidencia = :ID_Incidencia";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":ID_Incidencia", $ID_Incidencia, PDO::PARAM_INT);
-
-    if ($stmt->execute()) {
-        $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$incidencia) {
+        echo "<p>No s'ha trobat cap incidència amb la ID proporcionada.</p>";
+        exit;
     }
-}
+
+    if ($incidencia["Resolta"] != 1) {
+    echo "<p>No es pot tancar aquesta incidència perquè encara no està resolta.</p>";
+            exit;
+        }
+
+    $query = "UPDATE Incidencies SET Resolta = 2 WHERE ID_Incidencia = :ID_Incidencia";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":ID_Incidencia", $ID_Incidencia, PDO::PARAM_INT);
+    if ($stmt->execute()) {
+            header("Location: incidenciaTancada.php");
+            exit;
+        } else {
+            echo "<p>Error en tancar la incidència.</p>";
+        }
 
 ?>
 
@@ -37,21 +58,21 @@ if ($ID_Incidencia) {
         </a>
     <div class="formulario-lista">
     <h3>Tancament d'incidència</h3><br>
-        <p><strong>ID:</strong> <?= htmlspecialchars($fila['ID_Incidencia']) ?></p>
-        <p><strong>Data_Inici:</strong> <?= htmlspecialchars($fila['Data_Inici']) ?></p>
-        <p><strong>Descripcio:</strong> <?= htmlspecialchars($fila['Descripcio']) ?></p>
-        <p><strong>Prioritat:</strong> <?= isset($fila['Prioritat']) && $fila['Prioritat'] !== null ? htmlspecialchars($fila['Prioritat']) : "Encara no assignada" ?></p>
-        <p><strong>Tipologia:</strong> <?= isset($fila['Tipologia']) && $fila['Tipologia'] !== null ? htmlspecialchars($fila['Tipologia']) : "Encara no assignada" ?></p>
+        <p><strong>ID:</strong> <?= htmlspecialchars($incidencia['ID_Incidencia']) ?></p>
+        <p><strong>Data_Inici:</strong> <?= htmlspecialchars($incidencia['Data_Inici']) ?></p>
+        <p><strong>Descripcio:</strong> <?= htmlspecialchars($incidencia['Descripcio']) ?></p>
+        <p><strong>Prioritat:</strong> <?= isset($incidencia['Prioritat']) && $incidencia['Prioritat'] !== null ? htmlspecialchars($incidencia['Prioritat']) : "Encara no assignada" ?></p>
+        <p><strong>Tipologia:</strong> <?= isset($incidencia['Tipologia']) && $incidencia['Tipologia'] !== null ? htmlspecialchars($incidencia['Tipologia']) : "Encara no assignada" ?></p>
         <p><strong>Resolta:</strong>
             <?php
-            if ($fila['Resolta'] == 1) {
+            if ($incidencia['Resolta'] == 1) {
                 echo "Incidència resolta";
             } else {
                 echo "Incidència no resolta";
             }
             ?>
         </p>
-        <p><strong>ID_Tecnic:</strong> <?= isset($fila['ID_Tecnic']) && $fila['ID_Tecnic'] !== null ? htmlspecialchars($fila['ID_Tecnic']) : "Encara no assignat" ?></p>
+        <p><strong>ID_Tecnic:</strong> <?= isset($incidencia['ID_Tecnic']) && $incidencia['ID_Tecnic'] !== null ? htmlspecialchars($incidencia['ID_Tecnic']) : "Encara no assignat" ?></p>
         <h4>Aquesta incidència ja està resolta, vols tancarla definitivament?<h4>
         <div class="centrado">
         <a href="./afegirActuacio.php">

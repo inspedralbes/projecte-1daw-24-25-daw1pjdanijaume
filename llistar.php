@@ -60,7 +60,7 @@
           $placeholders = implode(',', array_fill(0, count($prioritats), '?'));
           $where[] = "Prioritat IN ($placeholders)";
           $params = array_merge($params, $prioritats);
-        }
+        }   
 
         $sql = "SELECT ID_incidencia, Departament, Prioritat, Descripcio,
                 DATE_FORMAT(Data_Inici, '%d/%m/%Y') AS Data,
@@ -132,7 +132,6 @@
 
       <div class="panel-titulo">Prioritat</div>
       <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="Todo" checked> Tot</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="No assignada"> No assignada</label></div>
       <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="Baixa"> Baixa</label></div>
       <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="Mitjana"> Mitjana</label></div>
       <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="Alta"> Alta</label></div>
