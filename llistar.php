@@ -60,9 +60,9 @@
           $placeholders = implode(',', array_fill(0, count($prioritats), '?'));
           $where[] = "Prioritat IN ($placeholders)";
           $params = array_merge($params, $prioritats);
-        }   
+        }
 
-        $sql = "SELECT ID_incidencia, Departament, Prioritat, Descripcio,
+        $sql = "SELECT ID_incidencia, Departament, Prioritat, Descripcio, ID_Tecnic, Resolta,
                 DATE_FORMAT(Data_Inici, '%d/%m/%Y') AS Data,
                 DATE_FORMAT(Data_Inici, '%H:%i') AS Hora
                 FROM Incidencies";
@@ -77,22 +77,61 @@
         $stmt->execute($params);
 
         if ($stmt->rowCount() > 0) {
-          echo "<table><tr><th>ID</th><th>Departament</th><th>Prioritat</th><th>Descripció</th><th>Data</th><th>Hora</th><th></th></tr>";
+          echo "<div class='llistat-incidencies'>";
           while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo "<tr><td>{$row["ID_incidencia"]}</td>
-                    <td>" . htmlspecialchars($row["Departament"]) . "</td>
-                    <td>" . htmlspecialchars($row["Prioritat"]) . "</td>
-                    <td>" . htmlspecialchars($row["Descripcio"]) . "</td>
-                    <td>{$row["Data"]}</td>
-                    <td>{$row["Hora"]}</td>
-                    <td>
-                      <form action='esborrar.php' method='post' style='display:inline;'>
-                        <input type='hidden' name='IncidenciaID' value='{$row["ID_incidencia"]}' />
-                        <button class='boton' type='submit' onclick='return confirm(\"Estàs segur que vols eliminar aquesta incidència?\")'>Eliminar</button>
-                      </form>
-                    </td></tr>";
+            $estat = 'No assignada';
+            if ($row["Resolta"] == 1) {
+                $estat = 'Pendent';
+            } elseif ($row["Resolta"] == 2) {
+                $estat = 'Resolt';
+            }
+
+            $prioritatClass = strtolower($row["Prioritat"]);
+            echo "
+              <div class='card-incidencia $prioritatClass'>
+                <div class='info-principal'>
+                  <span class='id'>{$row["ID_incidencia"]}</span>
+                  <span class='departament'>" . htmlspecialchars($row["Departament"]) . "</span>
+                  <span class='realitzada " . strtolower($estat)."'>" . $estat . "</span>
+                </div>
+                <p class='descripcio'>" . htmlspecialchars($row["Descripcio"]) . "</p>
+                <div class='info-extra'>
+  <span class='data'>
+    <ion-icon name='business'></ion-icon>
+    {$row["Departament"]}
+  </span>
+  <span class='hora'>
+    <ion-icon name='person'></ion-icon>
+    " . ($row["ID_Tecnic"] === null ? "No assignat" : $row["ID_Tecnic"]) . "
+  </span>
+  <span class='data'>
+    <ion-icon name='calendar'></ion-icon>
+    {$row["Data"]}
+  </span>
+  <span class='hora'>
+    <ion-icon name='time'></ion-icon>
+    {$row["Hora"]}
+  </span>
+  <span class='prioritat " . strtolower($row["Prioritat"]) . "'>
+    <ion-icon name='alert'></ion-icon>
+    " . htmlspecialchars($row["Prioritat"]) . "
+  </span>
+</div>
+
+                <div class='form-eliminar'>
+                <form action='editar.php' method='post'>
+                  <input type='hidden' name='IncidenciaID' value='{$row["ID_incidencia"]}' />
+                  <button class='botones editar' type='submit' onclick='return confirm(\"Estàs segur que vols editar aquesta incidència?\")'>Editar</button>
+                </form>
+                <form action='esborrar.php' method='post'>
+                  <input type='hidden' name='IncidenciaID' value='{$row["ID_incidencia"]}' />
+                  <button class='botones eliminar' type='submit' onclick='return confirm(\"Estàs segur que vols eliminar aquesta incidència?\")'>Eliminar</button>
+                </form>
+                </div>
+                </div>
+            ";
           }
-          echo "</table>";
+          echo "</div>";
         } else {
           echo "<br><p>No hi ha dades a mostrar.</p><br>";
         }
@@ -133,7 +172,7 @@
       <div class="panel-titulo">Prioritat</div>
       <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="Todo" checked> Tot</label></div>
       <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="Baixa"> Baixa</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="Mitjana"> Mitjana</label></div>
+      <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="Mitja"> Mitja</label></div>
       <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="Alta"> Alta</label></div>
     </div>
     <button class="boton" id="btn-aplicar" type="submit">Actualitzar</button>
@@ -184,6 +223,7 @@
       toggleGrupo("input[name='prioritats[]']");
     });
   </script>
+  <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 </body>
 
 </html>
