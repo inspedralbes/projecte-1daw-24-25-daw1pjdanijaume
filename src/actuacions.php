@@ -57,7 +57,7 @@ if ($ID_Incidencia) {
         </p>
         <p><strong>ID_Tecnic:</strong> <?= isset($fila['ID_Tecnic']) && $fila['ID_Tecnic'] !== null ? htmlspecialchars($fila['ID_Tecnic']) : "Encara no assignat" ?></p>
         <div class="centrado">
-        <a href="./afegirActuacio.php">
+        <a href="afegirActuacio.php?ID_Incidencia=<?= htmlspecialchars($fila['ID_Incidencia']) ?>">
                <button class="boton" id="centrado" type="submit" name="afegiractuacio">Afegir actuació</button>
         </a>
         </div><div class="centrado">

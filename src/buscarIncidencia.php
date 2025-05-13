@@ -18,8 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 switch ($fila["Resolta"]) {
                     case 0:
-                        $mensaje = "Aquesta incidència encara no està resolta.";
-                        break;
+                        header("Location: actuacions.php?ID_Incidencia=" . $ID_Incidencia);
+                        exit;
                     case 1:
                         header("Location: actuacions.php?ID_Incidencia=" . $ID_Incidencia);
                         exit;
