@@ -10,7 +10,7 @@ require_once 'connexio.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Llistat</title>
+    <title>Llistat de dades</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -39,42 +39,64 @@ require_once 'connexio.php';
 
             <div class="tabla-scrollable">
             <?php
+            $ordre = $_GET['ordre'] ?? 'ASC';
+        $ordenarPer = $_GET['ordenar_per'] ?? 'ID_incidencia';
+        $departaments = $_GET['departaments'] ?? [];
+        $prioritats = $_GET['prioritats'] ?? [];
 
-            /*$sql = "SELECT * FROM Incidencies";
-            $stmt = $pdo->query($sql);
+        $columnesValides = ['ID_incidencia', 'Departament', 'Prioritat', 'Data_Inici'];
+        if (!in_array($ordenarPer, $columnesValides)) {
+          $ordenarPer = 'ID_incidencia';
+        }
+        $ordre = strtoupper($ordre) === 'DESC' ? 'DESC' : 'ASC';
 
-            if ($stmt->rowCount() > 0) {
-            echo "<table>";
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<tr><td>ID: " . $row["ID_Incidencia"] . ", Departament: " . htmlspecialchars($row["Departament"]) . ", Data_Inici: " . htmlspecialchars($row["Data_Inici"]) . ", Descripcio: " . htmlspecialchars($row["Descripcio"]) . ", Prioritat: " . ($row["Prioritat"] !== null ? htmlspecialchars($row["Prioritat"]) : "Sense determinar") . ", Tipologia: " . ($row["Tipologia"] !== null ? htmlspecialchars($row["Tipologia"]) : "Sense determinar") . ", Resolta: " . ($row["Resolta"] !== null ? htmlspecialchars($row["Resolta"]) : "No resolta") . ", ID_Tecnic: " . ($row["ID_Tecnic"] !== null ? htmlspecialchars($row["ID_Tecnic"]) : "Sense tècnic") . "</td>";
-                    echo "<td><form action='editar.php' method='post' style='display:inline;'>
-                                                                         <input type='hidden' name='IncidenciaID' value='" . $row["ID_Incidencia"] . "' />
-                                                                         <button class='boton' type='submit' onclick='return confirm(\"Estàs segur que vols editar aquesta incidència?\")'>Editar</button>
-                                                                       </form></td></tr>";
-                }
-                echo "</table>";
-            } else {
-                echo '<br><p style="text-align: center;">No hi ha dades a mostrar.</p><br>';
-            }*/
+        $where = [];
+        $params = [];
 
-            $sql = "SELECT ID_incidencia, Departament, Descripcio,
-            DATE_FORMAT(Data_Inici, '%d/%m/%Y') AS Data,
-            DATE_FORMAT(Data_Inici, '%H:%i') AS Hora
-            FROM Incidencies";
-        $stmt = $pdo->query($sql);
+        if (!empty($departaments) && !in_array('Todo', $departaments)) {
+          $placeholders = implode(',', array_fill(0, count($departaments), '?'));
+          $where[] = "Departament IN ($placeholders)";
+          $params = array_merge($params, $departaments);
+        }
+
+        if (!empty($prioritats) && !in_array('Todo', $prioritats)) {
+          $placeholders = implode(',', array_fill(0, count($prioritats), '?'));
+          $where[] = "Prioritat IN ($placeholders)";
+          $params = array_merge($params, $prioritats);
+        }   
+
+        $sql = "SELECT ID_incidencia, Departament, Prioritat, Descripcio, Tipologia, Resolta, ID_Tecnic, 
+                DATE_FORMAT(Data_Inici, '%d/%m/%Y') AS Data,
+                DATE_FORMAT(Data_Inici, '%H:%i') AS Hora
+                FROM Incidencies";
+
+        if (!empty($where)) {
+          $sql .= " WHERE " . implode(" AND ", $where);
+        }
+
+        $sql .= " ORDER BY $ordenarPer $ordre";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
 
         if ($stmt->rowCount() > 0) {
-          echo "<table><tr><th>ID</th><th>Departament</th><th>Descripció</th><th>Data</th><th>Hora</th><th></th></tr>";
+          echo "<table><tr><th>ID</th><th>Departament</th><th>Prioritat</th><th>Descripció</th><th>Data</th><th>Hora</th><th>Tipologia</th><th>Resolta?</th><th>ID Tècnic</th><th></th></tr>";
           while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo "<tr><td>" . $row["ID_incidencia"] . "</td>
-              <td>" . htmlspecialchars($row["Departament"]) . "</td>
-              <td>" . htmlspecialchars($row["Descripcio"]) . "</td>
-              <td>" . $row["Data"] . "</td>
-              <td>" . $row["Hora"] . "</td>";
-            echo "<td><form action='esborrar.php' method='post' style='display:inline;'>
-              <input type='hidden' name='IncidenciaID' value='" . $row["ID_incidencia"] . "' />
-              <button class='boton' type='submit' onclick='return confirm(\"Estàs segur que vols eliminar aquesta incidència?\")'>Eliminar</button>
-              </form></td></tr>";
+            echo "<tr><td>{$row["ID_incidencia"]}</td>
+                    <td>" . htmlspecialchars($row["Departament"]) . "</td>
+                    <td>" . htmlspecialchars($row["Prioritat"]) . "</td>
+                    <td>" . htmlspecialchars($row["Descripcio"]) . "</td>
+                    <td>{$row["Data"]}</td>
+                    <td>{$row["Hora"]}</td> 
+                    <td>" . ($row["Tipologia"] !== null ? htmlspecialchars($row["Tipologia"]) : "Sense determinar") . "</td>
+                    <td>" . ($row["Resolta"] == 0 ? "No": "Sí") . "</td>
+                    <td>" . ($row["ID_Tecnic"] !== null ? htmlspecialchars($row["ID_Tecnic"]) : "Sense tècnic") . "</td>
+                    <td>
+                      <form action='editar.php' method='post' style='display:inline;'>
+                        <input type='hidden' name='IncidenciaID' value='{$row["ID_incidencia"]}' />
+                        <button class='boton' type='submit' onclick='return confirm(\"Estàs segur que vols editar aquesta incidència?\")'>Editar</button>
+                      </form>
+                    </td></tr>";
           }
           echo "</table>";
         } else {
@@ -84,37 +106,44 @@ require_once 'connexio.php';
         </div>
     </section>
 
-    <div id="panel-filtros">
+    <form id="panel-filtros" method="GET">
     <div class="tabla-scrollable">
       <div class="panel-titulo">Ordre</div>
       <div class="panel-opcion">
-        <label><input type="radio" name="ordre" value="ascendent" checked> Ascendent</label>
+        <label><input type="radio" name="ordre" value="ASC" checked> Ascendent</label>
       </div>
       <div class="panel-opcion">
-        <label><input type="radio" name="ordre" value="descendent"> Descendent</label>
+        <label><input type="radio" name="ordre" value="DESC"> Descendent</label>
       </div>
-  
-      <div class="panel-titulo">Departament</div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Tot" checked> Tot</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Contabilitat"> Contabilitat</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Administració"> Administració</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Producció"> Producció</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Manteniment"> Manteniment</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Informàtica"> Informàtica</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Suport tècnic"> Suport tècnic</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Marketing"> Marketing</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-dep" value="Atenció al client"> Atenció al client</label></div>
-  
-      <div class="panel-titulo">Prioritat</div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-pri" value="Tot" checked> Tot</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-pri" value="No assignada"> No assignada</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-pri" value="Baixa"> Baixa</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-pri" value="Mitjana"> Mitjana</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" class="filtro-pri" value="Alta"> Alta</label></div>
-    </div>
 
-    <button class="boton"  id="btn-aplicar">Actualitzar</button>
-  </div>
+      <div class="panel-titulo">Ordenar per</div>
+      <div class="panel-opcion">
+        <select name="ordenar_per">
+          <option value="ID_incidencia">ID</option>
+          <option value="Departament">Departament</option>
+          <option value="Prioritat">Prioritat</option>
+          <option value="Data_Inici">Data d'inici</option>
+        </select>
+      </div>
+
+      <div class="panel-titulo">Departament</div>
+      <div class="panel-opcion"><label><input type="checkbox" name="departaments[]" value="Todo" checked> Tot</label></div>
+      <?php
+      $departaments = ["Contabilitat", "Administració", "Producció", "Manteniment", "Informàtica", "Suport tècnic", "Marketing", "Atenció al client"];
+      foreach ($departaments as $d) {
+        echo "<div class='panel-opcion'><label><input type='checkbox' name='departaments[]' value=\"$d\"> $d</label></div>";
+      }
+      ?>
+
+      <div class="panel-titulo">Prioritat</div>
+      <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="Todo" checked> Tot</label></div>
+      <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="No assignada"> No assignada</label></div>
+      <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="Baixa"> Baixa</label></div>
+      <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="Mitjana"> Mitjana</label></div>
+      <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="Alta"> Alta</label></div>
+    </div>
+    <button class="boton" id="btn-aplicar" type="submit">Actualitzar</button>
+  </form>
 
     <footer>
     <p>&copy; 2025 Daniel Robles & Jaume Hurtado</p>
@@ -135,42 +164,30 @@ require_once 'connexio.php';
           !panelFiltros.contains(e.target) &&
           e.target !== btnFiltrar) {
           panelFiltros.classList.remove("visible");
-          document.body.classList.remove("panel-abierto");
+          document.body.classList.remove("panel-aberto");
         }
       });
 
-      // Lógica Todo / otros en filtros de departamento
-      const checkboxes = document.querySelectorAll(".filtro-dep");
-      checkboxes.forEach(checkbox => {
-        checkbox.addEventListener("change", () => {
-          if (checkbox.value === "Todo" && checkbox.checked) {
-            checkboxes.forEach(cb => {
-              if (cb !== checkbox) cb.checked = false;
-            });
-          } else if (checkbox.value !== "Todo" && checkbox.checked) {
-            checkboxes.forEach(cb => {
-              if (cb.value === "Todo") cb.checked = false;
-            });
-          }
+      const toggleGrupo = (grupoSelector) => {
+        const checkboxes = document.querySelectorAll(grupoSelector);
+        checkboxes.forEach(checkbox => {
+          checkbox.addEventListener("change", () => {
+            if (checkbox.value === "Todo" && checkbox.checked) {
+              checkboxes.forEach(cb => {
+                if (cb !== checkbox) cb.checked = false;
+              });
+            } else if (checkbox.value !== "Todo" && checkbox.checked) {
+              checkboxes.forEach(cb => {
+                if (cb.value === "Todo") cb.checked = false;
+              });
+            }
+          });
         });
-      });
-      const checkboxes2 = document.querySelectorAll(".filtro-pri");
-      checkboxes2.forEach(checkbox => {
-        checkbox.addEventListener("change", () => {
-          if (checkbox.value === "Todo" && checkbox.checked) {
-            checkboxes2.forEach(cb => {
-              if (cb !== checkbox) cb.checked = false;
-            });
-          } else if (checkbox.value !== "Todo" && checkbox.checked) {
-            checkboxes2.forEach(cb => {
-              if (cb.value === "Todo") cb.checked = false;
-            });
-          }
-        });
-      });
+      };
+
+      toggleGrupo("input[name='departaments[]']");
+      toggleGrupo("input[name='prioritats[]']");
     });
   </script>
 </body>
-
-
 </html>

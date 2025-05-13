@@ -60,7 +60,7 @@
           $placeholders = implode(',', array_fill(0, count($prioritats), '?'));
           $where[] = "Prioritat IN ($placeholders)";
           $params = array_merge($params, $prioritats);
-        }
+        }   
 
         $sql = "SELECT ID_incidencia, Departament, Prioritat, Descripcio,
                 DATE_FORMAT(Data_Inici, '%d/%m/%Y') AS Data,
