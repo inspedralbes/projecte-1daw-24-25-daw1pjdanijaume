@@ -361,66 +361,74 @@ footer {
 }
 
 /*MENU ORDENAR/FILTRAR*/
-    body.panel-abierto .formulario-lista {
+body.panel-abierto .formulario-lista {
       transform: translateX(-250px);
-    }
+}
 
-    .encabezado-lista {
+.encabezado-lista {
       display: flex;
       justify-content: space-between;
       align-items: center;
-    }
+}
 
-    #btn-filtrar {
+#btn-filtrar {
       cursor: pointer;
       margin-right: 5%;
       color: #4f6c77;
       font-weight: bold;
       background: none;
       border: none;
-    }
-
-    #panel-filtros {
-      position: fixed;
+}#panel-filtros {
+  position: fixed;
       top: 0;
       right: 0;
-      height: 100%;
-      width: 250px;
+      height: 100vh;
+      width: 25%;
       background-color: #ffffff;
       color: #333;
-      padding: 1rem;
-      display: none;
-      flex-direction: column;
-      z-index: 1000;
-      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
-    }
-    
-    #panel-filtros.visible {
-      display: flex;
-    }
+      padding: 30px;
+      padding-bottom: 60px;  /*espacio para el botón */
+  overflow-y: auto;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+  display: none;
+  z-index: 1000;
+}
 
-    .panel-titulo {
-      font-weight: bold;
+#panel-filtros.visible {
+  display: block;
+}
+
+.panel-titulo {
+  font-weight: bold;
       margin-top: 1rem;
       border-bottom: 1px solid #555;
       padding-bottom: 0.5rem;
-    }
-
-    .panel-opcion {
-      margin: 0.5rem 0;
-    }
-
-    .panel-opcion label {
       cursor: pointer;
-    }
+}
 
-    #btn-aplicar {
-      margin-top: auto;
-    }
+.panel-opcion select {
+      cursor: pointer;
+}
 
-    /*PRUEBAS*/
+.panel-opcion {
+  padding: 8px 12px;
+}
 
-    .llistat-incidencies {
+.panel-opcion.oculto {
+  display: none;
+}
+
+#btn-aplicar {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: calc(25% - 40px);
+  z-index: 1100;
+}
+
+/*PRUEBAS*/
+
+.llistat-incidencies {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
@@ -506,6 +514,10 @@ footer {
     color: #065f46;
 }
 
+.realitzada.tancat {
+    background-color: #000000;
+    color: #ffffff;
+}
 .descripcio {
   margin: 0.5rem 0;
   color: #444;
