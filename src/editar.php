@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["IncidenciaID"])) {
     $stmt->execute([$id]);
     $incidencia = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($incidencia["Resolta"] == 2) {
+    if ($incidencia["Resolta"] == 3) {
         echo "<p>Aquesta incidència està tancada i no es pot modificar.</p>";
         exit;
     }
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["actualizar"])) {
     $stmt_update = $pdo->prepare($sql_update);
     $stmt_update->execute([$Prioritat, $Tipologia, $Resolta, $Id_Tecnic, $id]);
 
-    header("Location: index.html");
+    header("Location: llistar.php");
     exit;
 }
 ?>
@@ -94,8 +94,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["actualizar"])) {
 
         <label for="Resolta">Resolta:</label>
         <select name="Resolta">
-            <option value="0" <?= ($incidencia["Resolta"] == 0) ? "selected" : "" ?>>No resolta</option>
-            <option value="1" <?= ($incidencia["Resolta"] == 1) ? "selected" : "" ?>>Resolta</option>
+            <option value="0" <?= ($incidencia["Resolta"] == 0) ? "selected" : "" ?>>No assignada</option>
+            <option value="1" <?= ($incidencia["Resolta"] == 1) ? "selected" : "" ?>>Pendent</option>
+            <option value="2" <?= ($incidencia["Resolta"] == 2) ? "selected" : "" ?>>Resolt</option>
         </select><br><br>
 
         <label for="ID_Tecnic">ID Tècnic:</label>
