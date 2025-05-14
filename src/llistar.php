@@ -62,6 +62,14 @@
           $params = array_merge($params, $prioritats);
         }
 
+        $tecnics = $_GET['tecnics'] ?? [];
+
+if (!empty($tecnics) && !in_array('Todo', $tecnics)) {
+    $placeholders = implode(',', array_fill(0, count($tecnics), '?'));
+    $where[] = "ID_Tecnic IN ($placeholders)";
+    $params = array_merge($params, $tecnics);
+}
+
         $estats = $_GET['estats'] ?? [];
 
 if (!empty($estats) && !in_array('Todo', $estats)) {
@@ -223,8 +231,27 @@ if (!empty($estats) && !in_array('Todo', $estats)) {
         <div class="panel-opcion"><label><input type="checkbox" name="estats[]" value="Resolt"> Resolt</label></div>
         <div class="panel-opcion"><label><input type="checkbox" name="estats[]" value="Tancat"> Tancat</label></div>
       </div>
-
     </div>
+
+    <div class="panel-titulo">Tècnic</div>
+<div class="panel-opcion">
+  <label><input type="checkbox" name="tecnics[]" value="Todo" checked> Tot</label>
+</div>
+
+<?php
+$sqlTecnic = "SELECT id_tecnic, nom FROM Tecnics ORDER BY nom";
+$stmtTecnic = $pdo->query($sqlTecnic);
+
+while ($t = $stmtTecnic->fetch(PDO::FETCH_ASSOC)) {
+    $id  = htmlspecialchars($t["id_tecnic"]);
+    $nom = htmlspecialchars($t["nom"]);
+    echo "
+      <div class='panel-opcion'>
+        <label><input type='checkbox' name='tecnics[]' value='$id'> $nom</label>
+      </div>";
+}
+?>
+
     <button class="boton" id="btn-aplicar" type="submit">Actualitzar</button>
   </form>
 
@@ -304,6 +331,8 @@ hacerPlegables();
       toggleGrupo("input[name='departaments[]']");
       toggleGrupo("input[name='prioritats[]']");
       toggleGrupo("input[name='estats[]']");
+      toggleGrupo("input[name='tecnics[]']");
+
     });
   </script>
   <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
