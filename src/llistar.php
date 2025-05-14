@@ -62,6 +62,43 @@
           $params = array_merge($params, $prioritats);
         }
 
+        $tecnics = $_GET['tecnics'] ?? [];
+
+if (!empty($tecnics) && !in_array('Todo', $tecnics)) {
+    $placeholders = implode(',', array_fill(0, count($tecnics), '?'));
+    $where[] = "ID_Tecnic IN ($placeholders)";
+    $params = array_merge($params, $tecnics);
+}
+
+        $estats = $_GET['estats'] ?? [];
+
+if (!empty($estats) && !in_array('Todo', $estats)) {
+  // Convertim els valors textuals en els valors numèrics de la base de dades
+  $valorsResolta = [];
+  foreach ($estats as $estat) {
+    switch ($estat) {
+      case 'No assignada':
+        $valorsResolta[] = 0;
+        break;
+      case 'Pendent':
+        $valorsResolta[] = 1;
+        break;
+      case 'Resolt':
+        $valorsResolta[] = 2;
+        break;
+      case 'Tancat':
+        $valorsResolta[] = 3;
+        break;
+    }
+  }
+
+  if (!empty($valorsResolta)) {
+    $placeholders = implode(',', array_fill(0, count($valorsResolta), '?'));
+    $where[] = "Resolta IN ($placeholders)";
+    $params = array_merge($params, $valorsResolta);
+  }
+}
+
         $sql = "SELECT ID_incidencia, Departament, Prioritat, Descripcio, ID_Tecnic, Resolta,
                 DATE_FORMAT(Data_Inici, '%d/%m/%Y') AS Data,
                 DATE_FORMAT(Data_Inici, '%H:%i') AS Hora
@@ -84,6 +121,9 @@
                 $estat = 'Pendent';
             } elseif ($row["Resolta"] == 2) {
                 $estat = 'Resolt';
+            }
+             elseif ($row["Resolta"] == 3) {
+                $estat = 'Tancat';
             }
 
             $prioritatClass = strtolower($row["Prioritat"]);
@@ -144,10 +184,13 @@
     <div class="tabla-scrollable">
       <div class="panel-titulo">Ordre</div>
       <div class="panel-opcion">
-        <label><input type="radio" name="ordre" value="ASC" checked> Ascendent</label>
-      </div>
-      <div class="panel-opcion">
-        <label><input type="radio" name="ordre" value="DESC"> Descendent</label>
+        
+        <div class="panel-opcion">
+          <label><input type="radio" name="ordre" value="ASC" checked> Ascendent</label>
+        </div>
+        <div class="panel-opcion">
+          <label><input type="radio" name="ordre" value="DESC"> Descendent</label>
+        </div>
       </div>
 
       <div class="panel-titulo">Ordenar per</div>
@@ -161,6 +204,7 @@
       </div>
 
       <div class="panel-titulo">Departament</div>
+      <div class="panel-opcion">
       <div class="panel-opcion"><label><input type="checkbox" name="departaments[]" value="Todo" checked> Tot</label></div>
       <?php
       $departaments = ["Contabilitat", "Administració", "Producció", "Manteniment", "Informàtica", "Suport tècnic", "Marketing", "Atenció al client"];
@@ -168,14 +212,46 @@
         echo "<div class='panel-opcion'><label><input type='checkbox' name='departaments[]' value=\"$d\"> $d</label></div>";
       }
       ?>
+      </div>
 
       <div class="panel-titulo">Prioritat</div>
-      <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="Todo" checked> Tot</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="No assignada"> No assignada</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="Baixa"> Baixa</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="Mitja"> Mitja</label></div>
-      <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="Alta"> Alta</label></div>
+      <div class="panel-opcion">
+        <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="Todo" checked> Tot</label></div>
+        <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="No assignada"> No assignada</label></div>
+        <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="Baixa"> Baixa</label></div>
+        <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="Mitja"> Mitja</label></div>
+        <div class="panel-opcion"><label><input type="checkbox" name="prioritats[]" value="Alta"> Alta</label></div>
+      </div>
+
+      <div class="panel-titulo">Estat</div>
+      <div class="panel-opcion">
+        <div class="panel-opcion"><label><input type="checkbox" name="estats[]" value="Todo" checked> Tot</label></div>
+        <div class="panel-opcion"><label><input type="checkbox" name="estats[]" value="No assignada"> No assignada</label></div>
+        <div class="panel-opcion"><label><input type="checkbox" name="estats[]" value="Pendent"> Pendent</label></div>
+        <div class="panel-opcion"><label><input type="checkbox" name="estats[]" value="Resolt"> Resolt</label></div>
+        <div class="panel-opcion"><label><input type="checkbox" name="estats[]" value="Tancat"> Tancat</label></div>
+      </div>
     </div>
+
+    <div class="panel-titulo">Tècnic</div>
+<div class="panel-opcion">
+  <label><input type="checkbox" name="tecnics[]" value="Todo" checked> Tot</label>
+</div>
+
+<?php
+$sqlTecnic = "SELECT id_tecnic, nom FROM Tecnics ORDER BY nom";
+$stmtTecnic = $pdo->query($sqlTecnic);
+
+while ($t = $stmtTecnic->fetch(PDO::FETCH_ASSOC)) {
+    $id  = htmlspecialchars($t["id_tecnic"]);
+    $nom = htmlspecialchars($t["nom"]);
+    echo "
+      <div class='panel-opcion'>
+        <label><input type='checkbox' name='tecnics[]' value='$id'> $nom</label>
+      </div>";
+}
+?>
+
     <button class="boton" id="btn-aplicar" type="submit">Actualitzar</button>
   </form>
 
@@ -187,11 +263,43 @@
     document.addEventListener("DOMContentLoaded", () => {
       const btnFiltrar = document.getElementById("btn-filtrar");
       const panelFiltros = document.getElementById("panel-filtros");
+      // Colapsar secciones por defecto
+const ocultarOpciones = () => {
+  const panel = document.getElementById("panel-filtros");
+  const titulos = panel.querySelectorAll(".panel-titulo");
+  titulos.forEach(titulo => {
+    let siguiente = titulo.nextElementSibling;
+    while (siguiente && !siguiente.classList.contains("panel-titulo")) {
+      siguiente.classList.add("oculto");
+      siguiente = siguiente.nextElementSibling;
+    }
+  });
+};
+
+// Permitir alternar secciones al hacer clic
+const hacerPlegables = () => {
+  const titulos = document.querySelectorAll(".panel-titulo");
+  titulos.forEach(titulo => {
+    titulo.addEventListener("click", () => {
+      let siguiente = titulo.nextElementSibling;
+      while (siguiente && !siguiente.classList.contains("panel-titulo")) {
+        siguiente.classList.toggle("oculto");
+        siguiente = siguiente.nextElementSibling;
+      }
+    });
+  });
+};
+
+// Activar ambos comportamientos
+ocultarOpciones();
+hacerPlegables();
+
+
 
       btnFiltrar.addEventListener("click", (e) => {
         e.stopPropagation();
         panelFiltros.classList.toggle("visible");
-        document.body.classList.toggle("panel-aberto");
+        document.body.classList.toggle("panel-abierto");
       });
 
       document.addEventListener("click", (e) => {
@@ -199,7 +307,7 @@
           !panelFiltros.contains(e.target) &&
           e.target !== btnFiltrar) {
           panelFiltros.classList.remove("visible");
-          document.body.classList.remove("panel-aberto");
+          document.body.classList.remove("panel-abierto");
         }
       });
 
@@ -222,6 +330,9 @@
 
       toggleGrupo("input[name='departaments[]']");
       toggleGrupo("input[name='prioritats[]']");
+      toggleGrupo("input[name='estats[]']");
+      toggleGrupo("input[name='tecnics[]']");
+
     });
   </script>
   <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>

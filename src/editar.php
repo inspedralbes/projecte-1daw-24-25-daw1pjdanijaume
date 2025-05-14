@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["actualizar"])) {
         </header>
 
         <section class="seccion-central">
-            <a href="../dadesincidencia.php" class="flecha-atras">
+            <a href="../llistar.php" class="flecha-atras">
                 <span class="material-icons">arrow_back</span>
             </a>
     <div class="formulario-editar">
