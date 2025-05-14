@@ -12,6 +12,24 @@ if ($ID_Incidencia) {
         $fila = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $ID_Incidencia = $_POST["ID_Incidencia"] ?? null;
+
+    if ($ID_Incidencia) {
+        $query = "INSERT INTO Actuacions (ID_Incidencia, Data_Actuacio, Descripcio, Temps, VisibleUsuari)
+                  VALUES (:ID_Incidencia, NOW(), NULL, NULL, 0)";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":ID_Incidencia", $ID_Incidencia, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            header("Location: afegirActuacio.php?ID_Incidencia=" . $ID_Incidencia);
+            exit;
+        } else {
+            echo "Error al afegir l'actuació.";
+        }
+    }
+}
+
 
 ?>
 
@@ -60,12 +78,10 @@ if ($ID_Incidencia) {
         </p>
         <p><strong>ID_Tecnic:</strong> <?= isset($fila['ID_Tecnic']) && $fila['ID_Tecnic'] !== null ? htmlspecialchars($fila['ID_Tecnic']) : "Encara no assignat" ?></p>
         <div class="centrado">
-        <a href="afegirActuacio.php?ID_Incidencia=<?= htmlspecialchars($fila['ID_Incidencia']) ?>">
-               <button class="boton" id="centrado" type="submit" name="afegiractuacio">Afegir actuació</button>
-               <?php
-                    $query = "INSERT INTO Actuacions (ID_Incidencia, Data_actuacio, Descripcio, Temps, VisibleUsuari) VALUES (:ID_Incidencia, NOW(), Null, Null, 0)";
-               ?>
-        </a>
+            <form action="afegirActuacio.php" method="POST">
+                    <input type="hidden" name="ID_Incidencia" value="<?= htmlspecialchars($fila['ID_Incidencia']) ?>">
+                    <button class="boton" id="centrado" type="submit">Afegir actuació</button>
+                </form>
         </div><div class="centrado">
         <a href="tancarIncidencia.php?ID_Incidencia=<?= htmlspecialchars($fila['ID_Incidencia']) ?>">
         <button class="boton" id="centrado" type="submit" name="tancar">Tancar incidència</button>

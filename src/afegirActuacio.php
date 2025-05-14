@@ -1,8 +1,27 @@
 <?php
 require "connexio.php";
 
-$ID_Incidencia = intval($_GET["ID_Incidencia"]);
+$ID_Incidencia = $_POST["ID_Incidencia"] ?? ($_GET["ID_Incidencia"] ?? null);
+$ID_Incidencia = intval($ID_Incidencia);
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $ID_Incidencia = $_POST["ID_Incidencia"] ?? null;
+
+    if ($ID_Incidencia) {
+        $query = "INSERT INTO Actuacions (ID_Incidencia, Data_Actuacio, Descripcio, Temps, VisibleUsuari)
+                  VALUES (:ID_Incidencia, NOW(), 'No espeificada', 0, 0)";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":ID_Incidencia", $ID_Incidencia, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            $ID_Actuacio = $pdo->lastInsertId();
+            header("Location: afegirActuacio.php?ID_Actuacio=" . $ID_Actuacio);
+            exit;
+        } else {
+            echo "<p>Error al afegir l'actuació.</p>";
+        }
+    }
+}
 
 $query = "SELECT * FROM Actuacions WHERE ID_Incidencia = :ID_Incidencia";
 $stmt = $pdo->prepare($query);
@@ -11,15 +30,14 @@ $stmt->execute();
 
 $incidencia = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$ID_Incidencia = $_GET["ID_Incidencia"] ?? null;
 
     if (!$incidencia) {
         echo "<p>No s'ha trobat cap incidència amb la ID proporcionada.</p>";
         exit;
     }
 
-    if ($incidencia["Resolta"] == 1) {
-    echo "<p>Aquesta incidència ja està resolta està resolta.</p>";
+    if ($incidencia["Resolta"] == 3) {
+    echo "<p>Aquesta incidència ja està tancada.</p>";
             exit;
         }
 
