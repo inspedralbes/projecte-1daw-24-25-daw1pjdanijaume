@@ -45,10 +45,13 @@ if ($ID_Incidencia) {
         <p><strong>Estat de lla incidència:</strong>
             <?php
             if ($fila['Resolta'] == 1) {
-                echo "Incidència resolta";
+                echo "Incidència pendent";
             }
             else if ($fila['Resolta'] == 2) {
-                            echo "Incidència tancada";
+                            echo "Incidència resolta";
+            }
+            else if ($fila['Resolta'] == 3) {
+                 echo "Incidència tancada";
             }
             else {
                 echo "Incidència no resolta";
@@ -59,6 +62,9 @@ if ($ID_Incidencia) {
         <div class="centrado">
         <a href="afegirActuacio.php?ID_Incidencia=<?= htmlspecialchars($fila['ID_Incidencia']) ?>">
                <button class="boton" id="centrado" type="submit" name="afegiractuacio">Afegir actuació</button>
+               <?php
+                    $query = "INSERT INTO Actuacions (ID_Incidencia, Data_actuacio, Descripcio, Temps, VisibleUsuari) VALUES (:ID_Incidencia, NOW(), Null, Null, 0)";
+               ?>
         </a>
         </div><div class="centrado">
         <a href="tancarIncidencia.php?ID_Incidencia=<?= htmlspecialchars($fila['ID_Incidencia']) ?>">

@@ -28,6 +28,9 @@ CREATE TABLE Actuacions (
     Descripcio TEXT COLLATE utf8mb4_general_ci NOT NULL,
     Temps INT(11) NOT NULL,
     VisibleUsuari TINYINT(1) DEFAULT 1
+    ID_Tecnic INT(11) DEFAULT NULL,
+    FOREIGN KEY (ID_Incidencia) REFERENCES Incidencies(ID_Incidencia),
+    FOREIGN KEY (ID_Tecnic) REFERENCES Tecnics(ID_Tecnic)
 );
 
 CREATE TABLE Tecnics (

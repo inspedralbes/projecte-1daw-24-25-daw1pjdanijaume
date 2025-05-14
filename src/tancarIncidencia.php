@@ -19,12 +19,16 @@ $ID_Incidencia = $_GET["ID_Incidencia"] ?? null;
         exit;
     }
 
-    if ($incidencia["Resolta"] != 1) {
+    if ($incidencia["Resolta"] < 2) {
     echo "<p>No es pot tancar aquesta incidència perquè encara no està resolta.</p>";
             exit;
         }
+    else if ($incidencia["Resolta"] > 2) {
+    echo "<p>Aquesta incidència ja està tancada.</p>";
+            exit;
+        }
 
-    $query = "UPDATE Incidencies SET Resolta = 2 WHERE ID_Incidencia = :ID_Incidencia";
+    $query = "UPDATE Incidencies SET Resolta = 3 WHERE ID_Incidencia = :ID_Incidencia";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":ID_Incidencia", $ID_Incidencia, PDO::PARAM_INT);
     if ($stmt->execute()) {
@@ -65,7 +69,7 @@ $ID_Incidencia = $_GET["ID_Incidencia"] ?? null;
         <p><strong>Tipologia:</strong> <?= isset($incidencia['Tipologia']) && $incidencia['Tipologia'] !== null ? htmlspecialchars($incidencia['Tipologia']) : "Encara no assignada" ?></p>
         <p><strong>Resolta:</strong>
             <?php
-            if ($incidencia['Resolta'] == 1) {
+            if ($incidencia['Resolta'] > 1) {
                 echo "Incidència resolta";
             } else {
                 echo "Incidència no resolta";

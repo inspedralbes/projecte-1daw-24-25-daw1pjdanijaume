@@ -4,7 +4,7 @@ require "connexio.php";
 $ID_Incidencia = intval($_GET["ID_Incidencia"]);
 
 
-$query = "SELECT * FROM Incidencies WHERE ID_Incidencia = :ID_Incidencia";
+$query = "SELECT * FROM Actuacions WHERE ID_Incidencia = :ID_Incidencia";
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":ID_Incidencia", $ID_Incidencia, PDO::PARAM_INT);
 $stmt->execute();
@@ -50,19 +50,11 @@ $ID_Incidencia = $_GET["ID_Incidencia"] ?? null;
     <h3>Actuació a una incidència</h3><br>
         <p><strong>ID:</strong> <?= htmlspecialchars($incidencia['ID_Incidencia']) ?></p>
         <p><strong>Data d'inici de la incidencia:</strong> <?= htmlspecialchars($incidencia['Data_Inici']) ?></p>
-        <p><strong>Data d'inici de la actuació:</strong> <?= htmlspecialchars($incidencia['Data_Inici_Act']) ?></p>
-        <p><strong>Descripcio:</strong> <?= htmlspecialchars($incidencia['Descripcio']) ?></p>
-        <p><strong>Prioritat:</strong> <?= isset($incidencia['Prioritat']) && $incidencia['Prioritat'] !== null ? htmlspecialchars($incidencia['Prioritat']) : "Encara no assignada" ?></p>
-        <p><strong>Tipologia:</strong> <?= isset($incidencia['Tipologia']) && $incidencia['Tipologia'] !== null ? htmlspecialchars($incidencia['Tipologia']) : "Encara no assignada" ?></p>
-        <p><strong>Resolta:</strong>
-            <?php
-            if ($incidencia['Resolta'] == 1) {
-                echo "Incidència resolta";
-            } else {
-                echo "Incidència no resolta";
-            }
-            ?>
-        </p>
+        <p><strong>Data de l'actuació:</strong> <?= htmlspecialchars($incidencia['Data_Actuacio']) ?></p>
+        <p><strong>Descripcio de l'actuació:</strong> <?= htmlspecialchars($incidencia['Descripcio']) ?></p>
+        <p><strong>Temps dedicat a l'actuació:</strong> <?= isset($incidencia['Temps']) ?></p>
+        <p><strong>Tècnic de l'actuació:</strong> <?= isset($incidencia['ID_Tecnic']) ?></p>
+
         <p><strong>ID_Tecnic:</strong> <?= isset($incidencia['ID_Tecnic']) && $incidencia['ID_Tecnic'] !== null ? htmlspecialchars($incidencia['ID_Tecnic']) : "Encara no assignat" ?></p>
         <h4>Aquesta incidència ja està resolta, vols tancarla definitivament?<h4>
         <div class="centrado">
