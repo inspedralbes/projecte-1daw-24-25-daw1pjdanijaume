@@ -1,89 +1,111 @@
 <?php
 require "connexio.php";
 
+
 $ID_Incidencia = $_POST["ID_Incidencia"] ?? ($_GET["ID_Incidencia"] ?? null);
 $ID_Incidencia = intval($ID_Incidencia);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $ID_Incidencia = $_POST["ID_Incidencia"] ?? null;
-
-    if ($ID_Incidencia) {
-        $query = "INSERT INTO Actuacions (ID_Incidencia, Data_Actuacio, Descripcio, Temps, VisibleUsuari)
-                  VALUES (:ID_Incidencia, NOW(), 'No espeificada', 0, 0)";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":ID_Incidencia", $ID_Incidencia, PDO::PARAM_INT);
-
-        if ($stmt->execute()) {
-            $ID_Actuacio = $pdo->lastInsertId();
-            header("Location: afegirActuacio.php?ID_Actuacio=" . $ID_Actuacio);
-            exit;
-        } else {
-            echo "<p>Error al afegir l'actuació.</p>";
-        }
-    }
-}
-
-$query = "SELECT * FROM Actuacions WHERE ID_Incidencia = :ID_Incidencia";
+$query = "SELECT * FROM Incidencies WHERE ID_Incidencia = :ID_Incidencia";
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(":ID_Incidencia", $ID_Incidencia, PDO::PARAM_INT);
 $stmt->execute();
-
 $incidencia = $stmt->fetch(PDO::FETCH_ASSOC);
 
+if (!$incidencia) {
+    echo "<p>Error: La incidència no existeix.</p>";
+    exit;
+}
 
-    if (!$incidencia) {
-        echo "<p>No s'ha trobat cap incidència amb la ID proporcionada.</p>";
-        exit;
+if ($incidencia["Resolta"] == 3) {
+    echo "<p>Aquesta incidència està tancada i no es poden afegir actuacions.</p>";
+    exit;
+}
+
+$actuacio = null;
+$dataActuacio = isset($actuacio["Data_Actuacio"]) ? htmlspecialchars($actuacio["Data_Actuacio"]) : "Data no disponible";
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["Descripcio"], $_POST["Temps"], $_POST["ID_Tecnic"])) {
+    $Descripcio = $_POST["Descripcio"];
+    $Temps = $_POST["Temps"];
+    $ID_Tecnic = $_POST["ID_Tecnic"];
+
+    $query = "SELECT * FROM Actuacions WHERE ID_Incidencia = :ID_Incidencia LIMIT 1";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":ID_Incidencia", $ID_Incidencia, PDO::PARAM_INT);
+    $stmt->execute();
+    $actuacio = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($actuacio) {
+        $query = "UPDATE Actuacions SET Descripcio = :Descripcio, Temps = :Temps, ID_Tecnic = :ID_Tecnic WHERE ID_Actuacio = :ID_Actuacio";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":Descripcio", $Descripcio, PDO::PARAM_STR);
+        $stmt->bindParam(":Temps", $Temps, PDO::PARAM_INT);
+        $stmt->bindParam(":ID_Tecnic", $ID_Tecnic, PDO::PARAM_INT);
+        $stmt->bindParam(":ID_Actuacio", $actuacio['ID_Actuacio'], PDO::PARAM_INT);
+    } else {
+        $query = "INSERT INTO Actuacions (ID_Incidencia, Data_Actuacio, Descripcio, Temps, ID_Tecnic, VisibleUsuari)
+                  VALUES (:ID_Incidencia, NOW(), :Descripcio, :Temps, :ID_Tecnic, 1)";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":ID_Incidencia", $ID_Incidencia, PDO::PARAM_INT);
+        $stmt->bindParam(":Descripcio", $Descripcio, PDO::PARAM_STR);
+        $stmt->bindParam(":Temps", $Temps, PDO::PARAM_INT);
+        $stmt->bindParam(":ID_Tecnic", $ID_Tecnic, PDO::PARAM_INT);
     }
 
-    if ($incidencia["Resolta"] == 3) {
-    echo "<p>Aquesta incidència ja està tancada.</p>";
-            exit;
-        }
-
-
+    if ($stmt->execute()) {
+        header("Location: actuacioAfegida.php");
+        exit;
+    } else {
+        echo "<p>Error al afegir o actualitzar l'actuació.</p>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="ca">
- <header>
-     <link rel="stylesheet" href="css/style.css">
+<head>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
     <a href="https://www.institutpedralbes.cat/">
         <img src="../img/logo.png" alt="Ins Pedralbes">
     </a>
-    <h1 class="titulo-sitio">Consulta d'ncidències</h1>
+    <h1 class="titulo-sitio">Afegir actuació</h1>
     <nav class="menu-navegacion">
-      <a href="../index.html">Inici</a>
-      <a href="login.html">Login</a>
-      <a href="incidencias.html">Incidències</a>
-    </nav>
-  </header>
+          <a href="../index.html">Inici</a>
+          <a href="login.html">Login</a>
+          <a href="incidencias.html">Incidències</a>
+        </nav>
+</header>
 
-<body>
-    <section class="seccion-central">
-        <a href="../index.html" class="flecha-atras">
-          <span class="material-icons">arrow_back</span>
-        </a>
-    <div class="formulario-lista">
-    <h3>Actuació a una incidència</h3><br>
-        <p><strong>ID:</strong> <?= htmlspecialchars($incidencia['ID_Incidencia']) ?></p>
-        <p><strong>Data d'inici de la incidencia:</strong> <?= htmlspecialchars($incidencia['Data_Inici']) ?></p>
-        <p><strong>Data de l'actuació:</strong> <?= htmlspecialchars($incidencia['Data_Actuacio']) ?></p>
-        <p><strong>Descripcio de l'actuació:</strong> <?= htmlspecialchars($incidencia['Descripcio']) ?></p>
-        <p><strong>Temps dedicat a l'actuació:</strong> <?= isset($incidencia['Temps']) ?></p>
-        <p><strong>Tècnic de l'actuació:</strong> <?= isset($incidencia['ID_Tecnic']) ?></p>
+<section class="seccion-central">
+    <a href="../index.html" class="flecha-atras">
+              <span class="material-icons">arrow_back</span>
+            </a>
+        <div class="formulario-lista">
+            <h3>Afegir actuació a la incidència</h3><br>
 
-        <p><strong>ID_Tecnic:</strong> <?= isset($incidencia['ID_Tecnic']) && $incidencia['ID_Tecnic'] !== null ? htmlspecialchars($incidencia['ID_Tecnic']) : "Encara no assignat" ?></p>
-        <h4>Aquesta incidència ja està resolta, vols tancarla definitivament?<h4>
-        <div class="centrado">
-        <a href="./afegirActuacio.php">
-               <button class="boton" id="centrado" type="submit" name="tancament">Tancar incidència</button>
-        </a>
-    </div>
+            <form action="afegirActuacio.php" method="POST">
+                <p><strong>Id de la incidència: </strong><?= htmlspecialchars($incidencia["ID_Incidencia"]) ?></p>
+                <p><strong>Data de l'actuació: </strong><?= $dataActuacio ?></p>
+
+            <label><strong>Descripció de l'actuació:</strong></label>
+            <input type="text" name="Descripcio" required><br>
+
+            <label><strong>Temps dedicat:</strong></label>
+            <input type="number" name="Temps" required><br>
+
+            <label><strong>Tècnic assignat:</strong></label>
+            <input type="number" name="ID_Tecnic" required><br>
+            <a href="./actuacioAfegida.php">
+            <button class="boton" type="submit">Guardar actuació</button>
+            </a>
+    </form>
 </section>
-
 </body>
 <footer>
     <p>&copy; 2025 Daniel Robles & Jaume Hurtado</p>
-  </footer>
+</footer>
 </html>

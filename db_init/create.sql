@@ -37,3 +37,13 @@ CREATE TABLE Tecnics (
     ID_Tecnic INT(11) PRIMARY KEY AUTO_INCREMENT,
     Nom_Tecnic VARCHAR(255) COLLATE utf8mb4_general_ci NOT NULL
 );
+
+INSERT TO Tecnics (Nom_Tecnic) VALUE ('Juan'),
+INSERT TO Tecnics (Nom_Tecnic) VALUE ('Manolo'),
+INSERT TO Tecnics (Nom_Tecnic) VALUE ('Pedro'),
+INSERT TO Tecnics (Nom_Tecnic) VALUE ('Miguel'),
+INSERT TO Tecnics (Nom_Tecnic) VALUE ('Lucas'),
+INSERT TO Tecnics (Nom_Tecnic) VALUE ('Antonio'),
+INSERT TO Tecnics (Nom_Tecnic) VALUE ('Luis'),
+INSERT TO Tecnics (Nom_Tecnic) VALUE ('Pau'));
+

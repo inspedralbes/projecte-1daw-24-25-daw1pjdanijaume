@@ -12,23 +12,6 @@ if ($ID_Incidencia) {
         $fila = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $ID_Incidencia = $_POST["ID_Incidencia"] ?? null;
-
-    if ($ID_Incidencia) {
-        $query = "INSERT INTO Actuacions (ID_Incidencia, Data_Actuacio, Descripcio, Temps, VisibleUsuari)
-                  VALUES (:ID_Incidencia, NOW(), NULL, NULL, 0)";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":ID_Incidencia", $ID_Incidencia, PDO::PARAM_INT);
-
-        if ($stmt->execute()) {
-            header("Location: afegirActuacio.php?ID_Incidencia=" . $ID_Incidencia);
-            exit;
-        } else {
-            echo "Error al afegir l'actuació.";
-        }
-    }
-}
 
 
 ?>
