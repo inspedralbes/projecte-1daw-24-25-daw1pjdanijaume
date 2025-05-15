@@ -20,7 +20,37 @@ $ID_Incidencia = $_GET["ID_Incidencia"] ?? null;
     }
 
     if ($incidencia["Resolta"] < 2) {
-    echo "<p>No es pot tancar aquesta incidència perquè encara no està resolta.</p>";
+    ?>
+    <!DOCTYPE html>
+    <html lang="ca">
+     <head>
+         <link rel="stylesheet" href="css/style.css">
+     </head>
+     <body>
+         <header>
+            <a href="https://www.institutpedralbes.cat/">
+                <img src="../img/logo.png" alt="Ins Pedralbes">
+            </a>
+        <h1 class="titulo-sitio">Consulta d'ncidències</h1>
+        <nav class="menu-navegacion">
+          <a href="../index.html">Inici</a>
+          <a href="login.html">Login</a>
+          <a href="incidencias.html">Incidències</a>
+        </nav>
+      </header>
+      <section class="seccion-central">
+          <a href="../index.html" class="flecha-atras">
+            <span class="material-icons">arrow_back</span>
+          </a>
+      <div class="formulario-basico">
+      <h3>Tancament d'incidència</h3><br>
+      <p>No es pot tancar aquesta incidència perque encara no està resolta</p>
+      <div><button class="boton" onclick="window.history.back();">Tornar enrere</button></div>
+              </div>
+      </body>
+  </html>
+
+    <?php
             exit;
         }
     else if ($incidencia["Resolta"] > 2) {
