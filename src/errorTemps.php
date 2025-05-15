@@ -22,8 +22,8 @@
                     <span class="material-icons">arrow_back</span>
                   </a>
               <div class="formulario-basico">
-              <h3>Tancament d'incidència</h3><br>
-              <p>No es pot tancar aquesta incidència perque encara no està resolta</p>
+              <h3>Actuació invàlida</h3><br>
+              <p>No es pot guardar aquesta actuació perque el temps no és correcte.</p>
               <div><button class="boton" onclick="window.history.back();">Tornar enrere</button></div>
                       </div>
               </body>

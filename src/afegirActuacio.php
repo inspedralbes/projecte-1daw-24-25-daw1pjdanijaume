@@ -4,6 +4,7 @@ require "connexio.php";
 
 $ID_Incidencia = $_POST["ID_Incidencia"] ?? ($_GET["ID_Incidencia"] ?? null);
 $ID_Incidencia = intval($ID_Incidencia);
+$dataActuacio = date("Y-m-d H:i:s");
 
 $query = "SELECT * FROM Incidencies WHERE ID_Incidencia = :ID_Incidencia";
 $stmt = $pdo->prepare($query);
@@ -22,7 +23,6 @@ if ($incidencia["Resolta"] == 3) {
 }
 
 $actuacio = null;
-$dataActuacio = isset($actuacio["Data_Actuacio"]) ? htmlspecialchars($actuacio["Data_Actuacio"]) : "Data no disponible";
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["Descripcio"], $_POST["Temps"], $_POST["ID_Tecnic"])) {
@@ -94,7 +94,7 @@ if ($Temps < 1) {
 
             <form action="afegirActuacio.php" method="POST">
                 <p><strong>Id de la incidència: </strong><input type="text" name="ID_Incidencia" value="<?= $incidencia["ID_Incidencia"] ?>" readonly></p>
-                <p><strong>Data de l'actuació: </strong><?= $dataActuacio ?></p>
+                <p><strong>Data de l'actuació: </strong><?= htmlspecialchars($dataActuacio) ?></p>
 
             <label><strong>Descripció de l'actuació:</strong></label>
             <input type="text" name="Descripcio" required><br>
