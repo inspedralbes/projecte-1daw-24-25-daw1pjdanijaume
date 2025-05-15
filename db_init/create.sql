@@ -21,29 +21,22 @@ CREATE TABLE Incidencies (
     ID_Tecnic INT(11) DEFAULT NULL
 );
 
+CREATE TABLE Tecnics (
+    ID_Tecnic INT(11) PRIMARY KEY AUTO_INCREMENT,
+    Nom_Tecnic VARCHAR(255) COLLATE utf8mb4_general_ci NOT NULL
+);
+
 CREATE TABLE Actuacions (
     ID_Actuacio INT(11) PRIMARY KEY AUTO_INCREMENT,
     ID_Incidencia INT(11) NOT NULL,
     Data_Actuacio DATETIME NOT NULL DEFAULT NOW(),
     Descripcio TEXT COLLATE utf8mb4_general_ci NOT NULL,
     Temps INT(11) NOT NULL,
-    VisibleUsuari TINYINT(1) DEFAULT 1
+    VisibleUsuari TINYINT(1) DEFAULT 1,
     ID_Tecnic INT(11) DEFAULT NULL,
     FOREIGN KEY (ID_Incidencia) REFERENCES Incidencies(ID_Incidencia),
     FOREIGN KEY (ID_Tecnic) REFERENCES Tecnics(ID_Tecnic)
 );
 
-CREATE TABLE Tecnics (
-    ID_Tecnic INT(11) PRIMARY KEY AUTO_INCREMENT,
-    Nom_Tecnic VARCHAR(255) COLLATE utf8mb4_general_ci NOT NULL
-);
-
-INSERT TO Tecnics (Nom_Tecnic) VALUE ('Juan'),
-INSERT TO Tecnics (Nom_Tecnic) VALUE ('Manolo'),
-INSERT TO Tecnics (Nom_Tecnic) VALUE ('Pedro'),
-INSERT TO Tecnics (Nom_Tecnic) VALUE ('Miguel'),
-INSERT TO Tecnics (Nom_Tecnic) VALUE ('Lucas'),
-INSERT TO Tecnics (Nom_Tecnic) VALUE ('Antonio'),
-INSERT TO Tecnics (Nom_Tecnic) VALUE ('Luis'),
-INSERT TO Tecnics (Nom_Tecnic) VALUE ('Pau'));
+INSERT INTO Tecnics (Nom_Tecnic) VALUES ('Juan'), ('Manolo'), ('Pedro'), ('Miguel'), ('Lucas'), ('Antonio'), ('Luis'), ('Pau');
 
