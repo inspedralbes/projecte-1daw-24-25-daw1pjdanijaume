@@ -45,14 +45,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </nav>
           </header>-->
 
-          <section class="seccion-central">
+          <!--<section class="seccion-central">
             <div class="formulario-basico" id="incidencies">
               <h2>Vols fer una incidència?</h2>
               <p>Completa el següent formulari.</p>
               <a href="./crear.php">
                 <button class="boton">Incidència</button>
               </a>
-            </div>
+            </div>-->
             <!--
             <div class="formulario-basico" id="login-acces">
               <h2>Accés tècnics</h2>
