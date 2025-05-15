@@ -30,11 +30,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["Descripcio"], $_POST["
     $Temps = $_POST["Temps"];
     $ID_Tecnic = $_POST["ID_Tecnic"];
 
-    $query = "SELECT * FROM Actuacions WHERE ID_Incidencia = :ID_Incidencia LIMIT 1";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":ID_Incidencia", $ID_Incidencia, PDO::PARAM_INT);
-    $stmt->execute();
-    $actuacio = $stmt->fetch(PDO::FETCH_ASSOC);
+if ($Temps < 1) {
+    header("Location: errorTemps.php");
+    exit;
+}
+
 
     if ($actuacio) {
         $query = "UPDATE Actuacions SET Descripcio = :Descripcio, Temps = :Temps, ID_Tecnic = :ID_Tecnic WHERE ID_Actuacio = :ID_Actuacio";
@@ -58,6 +58,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["Descripcio"], $_POST["
         exit;
     } else {
         echo "<p>Error al afegir o actualitzar l'actuació.</p>";
+    }
+
+    if ($Temps < 1) {
+        header("Location: actuacioAfegida.php");
+                exit;
     }
 }
 ?>
@@ -84,21 +89,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["Descripcio"], $_POST["
     <a href="../index.html" class="flecha-atras">
               <span class="material-icons">arrow_back</span>
             </a>
-        <div class="formulario-lista">
+        <div class="formulario-editar">
             <h3>Afegir actuació a la incidència</h3><br>
 
             <form action="afegirActuacio.php" method="POST">
-                <p><strong>Id de la incidència: </strong><?= htmlspecialchars($incidencia["ID_Incidencia"]) ?></p>
+                <p><strong>Id de la incidència: </strong><input type="text" name="ID_Incidencia" value="<?= $incidencia["ID_Incidencia"] ?>" readonly></p>
                 <p><strong>Data de l'actuació: </strong><?= $dataActuacio ?></p>
 
             <label><strong>Descripció de l'actuació:</strong></label>
             <input type="text" name="Descripcio" required><br>
 
-            <label><strong>Temps dedicat:</strong></label>
+            <label><strong>Temps dedicat (min):</strong></label>
             <input type="number" name="Temps" required><br>
 
             <label><strong>Tècnic assignat:</strong></label>
             <input type="number" name="ID_Tecnic" required><br>
+
             <a href="./actuacioAfegida.php">
             <button class="boton" type="submit">Guardar actuació</button>
             </a>

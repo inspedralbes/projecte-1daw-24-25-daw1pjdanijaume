@@ -64,7 +64,7 @@ if ($ID_Incidencia) {
             <form action="afegirActuacio.php" method="POST">
                     <input type="hidden" name="ID_Incidencia" value="<?= htmlspecialchars($fila['ID_Incidencia']) ?>">
                     <button class="boton" id="centrado" type="submit">Afegir actuació</button>
-                </form>
+            </form>
         </div><div class="centrado">
         <a href="tancarIncidencia.php?ID_Incidencia=<?= htmlspecialchars($fila['ID_Incidencia']) ?>">
         <button class="boton" id="centrado" type="submit" name="tancar">Tancar incidència</button>
