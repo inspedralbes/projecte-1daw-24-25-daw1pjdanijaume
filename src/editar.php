@@ -31,9 +31,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["actualizar"])) {
 
     if (!is_numeric($Id_Tecnic)) {
     ?>
+    <!DOCTYPE html>
+    <html lang="ca">
+    <head>
         <link rel="stylesheet" href="../css/style.css">
+    </head>
+    <body>
+        <header>
+                    <a href="https://www.institutpedralbes.cat/">
+                        <img src="../img/logo.png" alt="Ins Pedralbes">
+                    </a>
+                    <h1 class="titulo-sitio">Gestió d'Incidències</h1>
+                    <nav class="menu-navegacion">
+                        <a href="../index.html">Inici</a>
+                        <a href="login.html">Login</a>
+                        <a href="incidencias.html">Incidències</a>
+                    </nav>
+                </header>
+
+                <section class="seccion-central">
+                    <a href="window.history.back()" class="flecha-atras">
+                        <span class="material-icons">arrow_back</span>
+                    </a>
+        <div class="formulario-editar">
         <div><p>L'ID del tècnic ha de ser un número.</p></div><br>
         <div><button class="boton" onclick="window.history.back();">Tornar enrere</button></div>
+        </div>
+    </body>
+    </html>
         <?php
         exit;
     }
