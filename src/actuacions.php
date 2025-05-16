@@ -43,7 +43,7 @@ if ($ID_Incidencia) {
         <p><strong>Descripcio:</strong> <?= htmlspecialchars($fila['Descripcio']) ?></p>
         <p><strong>Prioritat:</strong> <?= isset($fila['Prioritat']) && $fila['Prioritat'] !== null ? htmlspecialchars($fila['Prioritat']) : "Encara no assignada" ?></p>
         <p><strong>Tipologia:</strong> <?= isset($fila['Tipologia']) && $fila['Tipologia'] !== null ? htmlspecialchars($fila['Tipologia']) : "Encara no assignada" ?></p>
-        <p><strong>Estat de lla incidència:</strong>
+        <p><strong>Estat de la incidència:</strong>
             <?php
             if ($fila['Resolta'] == 1) {
                 echo "Incidència pendent";
@@ -60,12 +60,13 @@ if ($ID_Incidencia) {
             ?>
         </p>
         <p><strong>ID_Tecnic:</strong> <?= isset($fila['ID_Tecnic']) && $fila['ID_Tecnic'] !== null ? htmlspecialchars($fila['ID_Tecnic']) : "Encara no assignat" ?></p>
-        <div class="centrado">
+        <div class="alineados">
+                <a href="llistatActuacions.php?ID_Incidencia=<?= htmlspecialchars($fila['ID_Incidencia']) ?>">
+                <button class="boton" id="centrado" type="submit" name="llistaActuacions">Actuacions de la incidència</button></a>
             <form action="afegirActuacio.php" method="POST">
                     <input type="hidden" name="ID_Incidencia" value="<?= htmlspecialchars($fila['ID_Incidencia']) ?>">
                     <button class="boton" id="centrado" type="submit">Afegir actuació</button>
             </form>
-        </div><div class="centrado">
         <a href="tancarIncidencia.php?ID_Incidencia=<?= htmlspecialchars($fila['ID_Incidencia']) ?>">
         <button class="boton" id="centrado" type="submit" name="tancar">Tancar incidència</button>
         </div>

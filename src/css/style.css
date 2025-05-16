@@ -356,6 +356,13 @@ footer {
     justify-content: center;
 }
 
+.alineados{
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    gap: 10px;
+}
+
 .inline{
     display: inline;
 }

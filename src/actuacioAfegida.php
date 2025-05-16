@@ -23,6 +23,8 @@
     <div class="formulario-basico">
       <h2>Gràcies per la teva col·laboració</h2>
       <p>La teva actuació ha sigut afegida amb èxit.</p>
+      <div><button class="boton" onclick="window.history.back();">Tornar enrere</button></div>
+                            </div>
     </div>
   </section>
 
