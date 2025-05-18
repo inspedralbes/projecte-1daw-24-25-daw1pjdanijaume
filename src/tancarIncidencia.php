@@ -28,15 +28,10 @@ $ID_Incidencia = $_GET["ID_Incidencia"] ?? null;
      </head>
      <body>
          <header>
-            <a href="https://www.institutpedralbes.cat/">
-                <img src="../img/logo.png" alt="Ins Pedralbes">
-            </a>
-        <h1 class="titulo-sitio">Consulta d'ncidències</h1>
-        <nav class="menu-navegacion">
-          <a href="../index.html">Inici</a>
-          <a href="login.html">Login</a>
-          <a href="incidencias.html">Incidències</a>
-        </nav>
+        <a href="https://www.institutpedralbes.cat/">
+          <img src="../img/logo.png" alt="Ins Pedralbes" />
+        </a>
+        <h1 class="titulo-sitio">Gestió d'Incidències</h1>
       </header>
       <section class="seccion-central">
           <a href="../index.html" class="flecha-atras">
@@ -83,8 +78,8 @@ $ID_Incidencia = $_GET["ID_Incidencia"] ?? null;
           </section>
 
           <footer>
-            <p>Daniel Robles    |   Jaume Hurtado</p>
-          </footer>
+        <p>&copy; 2025 Gestió d'Incidències</p>
+    </footer>
         </body>
         </html>
         <?php
@@ -106,17 +101,11 @@ $ID_Incidencia = $_GET["ID_Incidencia"] ?? null;
 <!DOCTYPE html>
 <html lang="ca">
  <header>
-     <link rel="stylesheet" href="css/style.css">
-    <a href="https://www.institutpedralbes.cat/">
-        <img src="../img/logo.png" alt="Ins Pedralbes">
-    </a>
-    <h1 class="titulo-sitio">Consulta d'ncidències</h1>
-    <nav class="menu-navegacion">
-      <a href="../index.html">Inici</a>
-      <a href="login.html">Login</a>
-      <a href="incidencias.html">Incidències</a>
-    </nav>
-  </header>
+        <a href="https://www.institutpedralbes.cat/">
+          <img src="../img/logo.png" alt="Ins Pedralbes" />
+        </a>
+        <h1 class="titulo-sitio">Gestió d'Incidències</h1>
+      </header>
 
 <body>
     <section class="seccion-central">

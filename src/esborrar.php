@@ -32,6 +32,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <header>
+        <a href="https://www.institutpedralbes.cat/">
+          <img src="../img/logo.png" alt="Ins Pedralbes" />
+        </a>
+        <h1 class="titulo-sitio">Gestió d'Incidències</h1>
+      </header>
 
 <section class="seccion-central">
 
@@ -39,10 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <footer>
     <p>&copy; 2025 Daniel Robles & Jaume Hurtado</p>
-    <div class="footer-links">
-        <a href="#">Contacte</a>
-    </div>
-</footer>
+  </footer>
 
 </body>
 </html>

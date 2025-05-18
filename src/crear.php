@@ -109,16 +109,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
   <header>
-    <a href="https://www.institutpedralbes.cat/">
-        <img src="../img/logo.png" alt="Ins Pedralbes">
-    </a>
-    <h1 class="titulo-sitio">Gestió d'Incidències</h1>
-    <nav class="menu-navegacion">
-      <a href="../index.html">Inici</a>
-      <a href="login.html">Login</a>
-      <a href="incidencias.html">Incidències</a>
-    </nav>
-  </header>
+        <a href="https://www.institutpedralbes.cat/">
+          <img src="../img/logo.png" alt="Ins Pedralbes" />
+        </a>
+        <h1 class="titulo-sitio">Gestió d'Incidències</h1>
+      </header>
 
   <section class="seccion-central">
     <a href="../index.html" class="flecha-atras">

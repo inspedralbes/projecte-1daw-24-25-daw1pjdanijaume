@@ -16,11 +16,6 @@
           <img src="../img/logo.png" alt="Ins Pedralbes" />
         </a>
         <h1 class="titulo-sitio">Gestió d'Incidències</h1>
-        <nav class="menu-navegacion">
-          <a href="../index.html">Inici</a>
-          <a href="login.html">Login</a>
-          <a href="incidencias.html">Incidències</a>
-        </nav>
       </header>
 
       <section class="seccion-central">

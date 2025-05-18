@@ -7,16 +7,11 @@
              </head>
              <body>
                  <header>
-                    <a href="https://www.institutpedralbes.cat/">
-                        <img src="../img/logo.png" alt="Ins Pedralbes">
-                    </a>
-                <h1 class="titulo-sitio">Consulta d'ncidències</h1>
-                <nav class="menu-navegacion">
-                  <a href="../index.html">Inici</a>
-                  <a href="login.html">Login</a>
-                  <a href="incidencias.html">Incidències</a>
-                </nav>
-              </header>
+        <a href="https://www.institutpedralbes.cat/">
+          <img src="../img/logo.png" alt="Ins Pedralbes" />
+        </a>
+        <h1 class="titulo-sitio">Gestió d'Incidències</h1>
+      </header>
               <section class="seccion-central">
                   <a href="../index.html" class="flecha-atras">
                     <span class="material-icons">arrow_back</span>

@@ -11,10 +11,11 @@
 </head>
 <body>
   <header>
-    <a href="https://www.institutpedralbes.cat/">
-      <img src="../img/logo.png" alt="Ins Pedralbes">
-    </a>
-  </header>
+        <a href="https://www.institutpedralbes.cat/">
+          <img src="../img/logo.png" alt="Ins Pedralbes" />
+        </a>
+        <h1 class="titulo-sitio">Gestió d'Incidències</h1>
+      </header>
 
   <section class="seccion-central">
     <a href="../index.html" class="flecha-atras">
