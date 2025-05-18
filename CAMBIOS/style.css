@@ -237,6 +237,11 @@ img {
     flex-direction: column;
 }
 
+.actuaciones {
+  text-align: center;
+  justify-content: center;
+  width: 100%;
+}
 .formulario-lista h2 {
     font-size: 24px;
     margin-bottom: 10px;
