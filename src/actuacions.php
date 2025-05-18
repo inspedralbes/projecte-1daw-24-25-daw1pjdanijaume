@@ -36,30 +36,53 @@ if ($ID_Incidencia) {
         <a href="../index.html" class="flecha-atras">
           <span class="material-icons">arrow_back</span>
         </a>
-    <div class="formulario-lista">
-    <h3>Detalls de la incidència</h3><br>
-        <p><strong>ID:</strong> <?= htmlspecialchars($fila['ID_Incidencia']) ?></p>
-        <p><strong>Data d'inici:</strong> <?= htmlspecialchars($fila['Data_Inici']) ?></p>
-        <p><strong>Descripcio:</strong> <?= htmlspecialchars($fila['Descripcio']) ?></p>
-        <p><strong>Prioritat:</strong> <?= isset($fila['Prioritat']) && $fila['Prioritat'] !== null ? htmlspecialchars($fila['Prioritat']) : "Encara no assignada" ?></p>
-        <p><strong>Tipologia:</strong> <?= isset($fila['Tipologia']) && $fila['Tipologia'] !== null ? htmlspecialchars($fila['Tipologia']) : "Encara no assignada" ?></p>
-        <p><strong>Estat de la incidència:</strong>
-            <?php
-            if ($fila['Resolta'] == 1) {
-                echo "Incidència pendent";
-            }
-            else if ($fila['Resolta'] == 2) {
-                            echo "Incidència resolta";
-            }
-            else if ($fila['Resolta'] == 3) {
-                 echo "Incidència tancada";
-            }
-            else {
-                echo "Incidència no resolta";
-            }
-            ?>
-        </p>
-        <p><strong>ID_Tecnic:</strong> <?= isset($fila['ID_Tecnic']) && $fila['ID_Tecnic'] !== null ? htmlspecialchars($fila['ID_Tecnic']) : "Encara no assignat" ?></p>
+    <div class="formulario-lista actuaciones">
+        <h2>Detalls de la incidència</h2>
+        <div class="tabla-scrollable">
+            <label>ID</label>
+            <div class="campo-input actuaciones">
+                <p><?= htmlspecialchars($fila['ID_Incidencia']) ?></p>
+            </div>
+            <label>Data d'inici</label>
+            <div class="campo-input actuaciones">
+                <p><?= htmlspecialchars($fila['Data_Inici']) ?></p>
+            </div>
+            <label>Descripció</label>
+            <div class="campo-input actuaciones">                
+                <p><?= htmlspecialchars($fila['Descripcio']) ?></p>
+            </div>
+            <label>Prioritat</label>
+            <div class="campo-input actuaciones">                
+                <p><?= isset($fila['Prioritat']) && $fila['Prioritat'] !== null ? htmlspecialchars($fila['Prioritat']) : "Encara no assignada" ?></p>
+            </div>
+            <label>Tipologia</label>
+            <div class="campo-input actuaciones">                
+                <p><?= isset($fila['Tipologia']) && $fila['Tipologia'] !== null ? htmlspecialchars($fila['Tipologia']) : "Encara no assignada" ?></p>
+            </div>
+            <label>Estat de la incidència</label>
+            <div class="campo-input actuaciones">
+                <p>
+                    <?php
+                    if ($fila['Resolta'] == 1) {
+                        echo "Incidència pendent";
+                    }
+                    else if ($fila['Resolta'] == 2) {
+                                    echo "Incidència resolta";
+                    }
+                    else if ($fila['Resolta'] == 3) {
+                         echo "Incidència tancada";
+                    }
+                    else {
+                        echo "Incidència no resolta";
+                    }
+                    ?>
+                </p>
+            </div>
+            <label>ID del tècnic</label>
+            <div class="campo-input actuaciones">
+                <p><?= isset($fila['ID_Tecnic']) && $fila['ID_Tecnic'] !== null ? htmlspecialchars($fila['ID_Tecnic']) : "Encara no assignat" ?></p>
+            </div>
+        </div>
         <div class="alineados">
                 <a href="llistatActuacions.php?ID_Incidencia=<?= htmlspecialchars($fila['ID_Incidencia']) ?>">
                 <button class="boton" id="centrado" type="submit" name="llistaActuacions">Actuacions de la incidència</button></a>

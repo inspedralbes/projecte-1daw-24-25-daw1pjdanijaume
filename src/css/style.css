@@ -187,6 +187,14 @@ img {
     justify-content: center;
 }
 
+.buscar {
+  height: auto;
+}
+
+.btn-buscar {
+  margin-top: 30px;
+}
+
 .formulario-basico h2,
 .formulario-basico p {
     margin-bottom: 30px;
@@ -229,6 +237,11 @@ img {
     flex-direction: column;
 }
 
+.actuaciones {
+  text-align: center;
+  justify-content: center;
+  width: 100%;
+}
 .formulario-lista h2 {
     font-size: 24px;
     margin-bottom: 10px;
@@ -255,7 +268,7 @@ img {
     align-content: center;
     justify-content: center;
     overflow:auto;
-    max-height:75%;
+    max-height: 100vh;
     height:auto;
 }
 

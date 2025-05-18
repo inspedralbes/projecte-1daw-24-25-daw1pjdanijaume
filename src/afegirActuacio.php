@@ -47,8 +47,8 @@ if ($incidencia["Resolta"] == 3) {
       </section>
 
       <footer>
-        <p>Daniel Robles    |   Jaume Hurtado</p>
-      </footer>
+      <p>&copy; 2025 Daniel Robles & Jaume Hurtado</p>
+    </footer>
     </body>
     </html>
     <?php
@@ -123,24 +123,38 @@ if ($Temps < 1) {
               <span class="material-icons">arrow_back</span>
             </a>
         <div class="formulario-editar">
+          <div class="contenedor-formulario actuacio">
             <h3>Afegir actuació a la incidència</h3><br>
 
             <form action="afegirActuacio.php" method="POST">
-                <p><strong>Id de la incidència: </strong><input type="text" name="ID_Incidencia" value="<?= $incidencia["ID_Incidencia"] ?>" readonly></p>
-                <p><strong>Data de l'actuació: </strong><?= htmlspecialchars($dataActuacio) ?></p>
+              <label>Id de la incidència:</label>
+              <div class="campo-input">
+                <p><input type="text" name="ID_Incidencia" value="<?= $incidencia["ID_Incidencia"] ?>" readonly></p>
+              </div>
+              <label>Data de l'actuació:</label>
+              <div class="campo-input">
+                <p><?= htmlspecialchars($dataActuacio) ?></p>
+              </div>
+              <label>Descripció de l'actuació:</label>
+              <div class="campo-input">
+                <input type="text" name="Descripcio" required><br>
+              </div>
 
-            <label><strong>Descripció de l'actuació:</strong></label>
-            <input type="text" name="Descripcio" required><br>
+            <label>Temps dedicat (min):</label>
+            <div class="campo-input">
+              <input type="number" name="Temps" required><br>
+            </div>
 
-            <label><strong>Temps dedicat (min):</strong></label>
-            <input type="number" name="Temps" required><br>
-
-            <label><strong>Tècnic assignat:</strong></label>
-            <input type="number" name="ID_Tecnic" required><br>
+            <label>Tècnic assignat:</label>
+            <div class="campo-input">
+              <input type="number" name="ID_Tecnic" required><br>
+            </div>
 
             <a href="./actuacioAfegida.php">
             <button class="boton" type="submit">Guardar actuació</button>
             </a>
+          </div>
+        </div>
     </form>
 </section>
 </body>
