@@ -57,24 +57,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <a href="../index.html" class="flecha-atras">
           <span class="material-icons">arrow_back</span>
         </a>
-    <div class="formulario-basico buscar">
-    <h2>Buscar Incidència</h2>
-    <form method="POST">
-        <label for="id">Introdueix l'ID de la incidència:</label>
-        <input type="number" name="ID_Incidencia" id="ID_Incidencia" required>
-        <div class="centrado">
-        <button type="submit" class="boton btn-buscar">Buscar</button>
-        <?php if ($mensaje): ?>
+        <div class="formulario-basico buscar">
+        <h2>Buscar Incidència</h2>
+        <form method="POST">
+            <label for="id">Introdueix l'ID de la incidència:</label>
+            <input type="number" name="ID_Incidencia" id="ID_Incidencia" required>
+            <div class="centrado">
+                <button type="submit" class="boton btn-buscar">Buscar</button>
+                <?php if ($mensaje): ?>
                     <p><strong><?= htmlspecialchars($mensaje) ?></strong></p>
                 <?php endif; ?>
-        </div>
-    </form>
+            </div>
+        </form>
     </div>
 </section>
 
 <footer>
       <p>&copy; 2025 Daniel Robles & Jaume Hurtado</p>
-    </footer>
+</footer>
 
 </body>
 
