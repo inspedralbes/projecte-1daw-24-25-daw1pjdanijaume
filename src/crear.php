@@ -116,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </header>
 
   <section class="seccion-central">
-    <a href="../index.html" class="flecha-atras">
+    <a href="../usuari.html" class="flecha-atras">
       <span class="material-icons">arrow_back</span>
     </a>
     <div class="contenedor-principal incidencies">

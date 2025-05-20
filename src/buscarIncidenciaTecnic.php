@@ -18,13 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 switch ($fila["Resolta"]) {
                     case 0:
-                        header("Location: actuacions.php?ID_Incidencia=" . $ID_Incidencia);
+                        header("Location: actuacionsTecnic.php?ID_Incidencia=" . $ID_Incidencia);
                         exit;
                     case 1:
-                        header("Location: actuacions.php?ID_Incidencia=" . $ID_Incidencia);
+                        header("Location: actuacionsTecnic.php?ID_Incidencia=" . $ID_Incidencia);
                         exit;
                     case 2:
-                        header("Location: actuacions.php?ID_Incidencia=" . $ID_Incidencia);
+                        header("Location: actuacionsTecnic.php?ID_Incidencia=" . $ID_Incidencia);
                         exit;
                     case 3:
                         $mensaje = "Aquesta incidència ja està tancada i no es pot modificar.";
@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </header>
 
     <section class="seccion-central">
-        <a href="../index.html" class="flecha-atras">
+        <a href="../tecnic.html" class="flecha-atras">
           <span class="material-icons">arrow_back</span>
         </a>
         <div class="formulario-basico buscar">

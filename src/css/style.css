@@ -81,7 +81,7 @@ img {
     justify-content: center;
     align-items: center;
     width: 100%;
-    min-height: calc(100vh - 15%); /* Resta header y footer */
+    min-height: calc(100% - 15%); /* Resta header y footer */
     flex-wrap: wrap; /* Permite que los contenedores se apilen */
 }
 
@@ -584,6 +584,44 @@ body.panel-abierto .formulario-lista {
 }
 
 /* Media Queries para disposición vertical en móviles/tablets */
+@media (max-width: 576px) {
+    header {
+        flex-direction: column;
+        padding: 10px;
+    }
+    
+    .seccion-central {
+        margin-top: 15%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .contenedor-principal, 
+    .formulario-basico, 
+    .formulario-lista, 
+    .formulario-editar {
+        width: 95%;
+        margin: 10% 0;
+    }
+    
+    .titulo-sitio {
+        margin: 10px 0;
+    }
+    
+    .formulario-lista {
+        margin: 80px 0 60px;
+    }
+    
+    table, td, th {
+        padding: 5px;
+        font-size: 12px;
+    }
+    
+    .card-incidencia {
+        padding: 0.8rem;
+    }
+}
+
 @media (max-width: 992px) {
     .seccion-central {
         flex-direction: column;
@@ -622,34 +660,36 @@ body.panel-abierto .formulario-lista {
     }
 }
 
-@media (max-width: 576px) {
-    header {
-        flex-direction: column;
-        padding: 10px;
+.error-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f44336;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1000;
+    transition: opacity 5s ease;
+  }
+
+  .error-message.show {
+    opacity: 1;
+  }
+
+  .slide-down-enter {
+    animation: slideDown 0.5s ease forwards;
+  }
+
+  @keyframes slideDown {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -30px);
     }
-    
-    .contenedor-principal, 
-    .formulario-basico, 
-    .formulario-lista, 
-    .formulario-editar {
-        width: 95%;
-        margin: 10% 0;
+    100% {
+      opacity: 1;
+      transform: translate(-50%, 0);
     }
-    
-    .titulo-sitio {
-        margin: 10px 0;
-    }
-    
-    .formulario-lista {
-        margin: 80px 0 60px;
-    }
-    
-    table, td, th {
-        padding: 5px;
-        font-size: 12px;
-    }
-    
-    .card-incidencia {
-        padding: 0.8rem;
-    }
-}
+  }

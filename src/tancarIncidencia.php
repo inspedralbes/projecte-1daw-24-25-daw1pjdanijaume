@@ -24,7 +24,9 @@ $ID_Incidencia = $_GET["ID_Incidencia"] ?? null;
     <!DOCTYPE html>
     <html lang="ca">
      <head>
-         <link rel="stylesheet" href="css/style.css">
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="css/style.css">
      </head>
      <body>
          <header>

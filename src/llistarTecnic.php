@@ -19,7 +19,7 @@
       </header>
 
       <section class="seccion-central">
-        <a href="../admin.html" class="flecha-atras">
+        <a href="../tecnic.html" class="flecha-atras">
           <span class="material-icons">arrow_back</span>
         </a>
         <div class="formulario-lista">
@@ -121,39 +121,35 @@
                     </div>
                     <p class='descripcio'>" . htmlspecialchars($row["Descripcio"]) . "</p>
                     <div class='info-extra'>
-      <span class='data'>
-        <ion-icon name='business'></ion-icon>
-        {$row["Departament"]}
-      </span>
-      <span class='hora'>
-        <ion-icon name='person'></ion-icon>
-        " . ($row["ID_Tecnic"] === null ? "No assignat" : $row["ID_Tecnic"]) . "
-      </span>
-      <span class='data'>
-        <ion-icon name='calendar'></ion-icon>
-        {$row["Data"]}
-      </span>
-      <span class='hora'>
-        <ion-icon name='time'></ion-icon>
-        {$row["Hora"]}
-      </span>
-      <span class='prioritat " . strtolower($row["Prioritat"]) . "'>
-        <ion-icon name='alert'></ion-icon>
-        " . htmlspecialchars($row["Prioritat"]) . "
-      </span>
-    </div>
+                      <span class='data'>
+                        <ion-icon name='business'></ion-icon>
+                        {$row["Departament"]}
+                      </span>
+                      <span class='hora'>
+                        <ion-icon name='person'></ion-icon>
+                        " . ($row["ID_Tecnic"] === null ? "No assignat" : $row["ID_Tecnic"]) . "
+                      </span>
+                      <span class='data'>
+                        <ion-icon name='calendar'></ion-icon>
+                        {$row["Data"]}
+                      </span>
+                      <span class='hora'>
+                        <ion-icon name='time'></ion-icon>
+                        {$row["Hora"]}
+                      </span>
+                      <span class='prioritat " . strtolower($row["Prioritat"]) . "'>
+                        <ion-icon name='alert'></ion-icon>
+                        " . htmlspecialchars($row["Prioritat"]) . "
+                      </span>
+                    </div>
 
                     <div class='form-eliminar'>
-                      <form action='editar.php' method='post'>
-                        <input type='hidden' name='IncidenciaID' value='{$row["ID_incidencia"]}' />
-                        <button class='botones editar' type='submit' onclick='return confirm(\"Estàs segur que vols editar aquesta incidència?\")'>Editar</button>
-                      </form>
-                      <form action='esborrar.php' method='post'>
-                        <input type='hidden' name='IncidenciaID' value='{$row["ID_incidencia"]}' />
-                        <button class='botones eliminar' type='submit' onclick='return confirm(\"Estàs segur que vols eliminar aquesta incidència?\")'>Eliminar</button>
-                      </form>
+                      <button class='botones editar error'>Editar</button>
+                    
+                      <button class='botones eliminar error'>Eliminar</button>
+                    
                     </div>
-                    </div>
+                  </div>
                 ";
               }
               echo "</div>";
@@ -224,8 +220,32 @@
       <footer>
         <p>&copy; 2025 Daniel Robles & Jaume Hurtado</p>
       </footer>
-
+      <div class="error-message" id="errorMessage">No estas habilitat.</div>
       <script>
+        const errorMsg = document.getElementById('errorMessage');
+  const botones = document.querySelectorAll('.error');
+  let timeoutId;
+
+  botones.forEach(boton => {
+    boton.addEventListener('mouseenter', () => {
+      if (!errorMsg.classList.contains('show')) {
+        errorMsg.classList.add('slide-down-enter');
+      }
+
+      void errorMsg.offsetWidth;
+      errorMsg.classList.add('show');
+      clearTimeout(timeoutId);
+
+      timeoutId = setTimeout(() => {
+        errorMsg.classList.remove('show');
+
+        setTimeout(() => {
+          errorMsg.classList.remove('slide-down-enter');
+        }, 3000);
+      }, 1000);
+    });
+  });
+
         document.addEventListener("DOMContentLoaded", () => {
           const btnFiltrar = document.getElementById("btn-filtrar");
           const panelFiltros = document.getElementById("panel-filtros");

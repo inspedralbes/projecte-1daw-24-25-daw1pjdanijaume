@@ -38,7 +38,7 @@ if ($ID_Incidencia) {
 
 <body>
     <section class="seccion-central">
-        <a href="../admin.html" class="flecha-atras">
+        <a href="../tecnic.html" class="flecha-atras">
           <span class="material-icons">arrow_back</span>
         </a>
     <div class="formulario-lista actuaciones">
@@ -91,16 +91,40 @@ if ($ID_Incidencia) {
         <div class="alineados">
                 <a href="llistatActuacions.php?ID_Incidencia=<?= htmlspecialchars($fila['ID_Incidencia']) ?>">
                 <button class="boton" id="centrado" type="submit" name="llistaActuacions">Actuacions de la incidència</button></a>
-            <form action="afegirActuacio.php" method="POST">
+                <form action="afegirActuacio.php" method="POST">
                     <input type="hidden" name="ID_Incidencia" value="<?= htmlspecialchars($fila['ID_Incidencia']) ?>">
                     <button class="boton" id="centrado" type="submit">Afegir actuació</button>
-            </form>
-        <a href="tancarIncidencia.php?ID_Incidencia=<?= htmlspecialchars($fila['ID_Incidencia']) ?>">
-        <button class="boton" id="centrado" type="submit" name="tancar">Tancar incidència</button>
+                </form>
+                <button class="boton error" id="centrado" type="submit" name="tancar">Tancar incidència</button>
         </div>
     </div>
 </section>
+<div class="error-message" id="errorMessage">No estas habilitat.</div>
+<script>
+  const errorMsg = document.getElementById('errorMessage');
+  const botones = document.querySelectorAll('.error');
+  let timeoutId;
 
+  botones.forEach(boton => {
+    boton.addEventListener('mouseenter', () => {
+      if (!errorMsg.classList.contains('show')) {
+        errorMsg.classList.add('slide-down-enter');
+      }
+
+      void errorMsg.offsetWidth;
+      errorMsg.classList.add('show');
+      clearTimeout(timeoutId);
+
+      timeoutId = setTimeout(() => {
+        errorMsg.classList.remove('show');
+
+        setTimeout(() => {
+          errorMsg.classList.remove('slide-down-enter');
+        }, 3000);
+      }, 1000);
+    });
+  });
+</script>
 </body>
 <footer>
     <p>&copy; 2025 Daniel Robles & Jaume Hurtado</p>
