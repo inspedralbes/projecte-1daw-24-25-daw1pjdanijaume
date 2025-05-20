@@ -138,9 +138,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </div>
           <div class="campo-input">
             <ion-icon name="reader-outline"></ion-icon>
-            <input name="Descripcio" type="text" placeholder="Descripció" />
+            <input name="Descripcio" type="text" placeholder="Descripció"/>
           </div>
-          <br><br>
+          <br>
           <button class="boton" type="submit">Enviar</button>
         </form>
       </div>

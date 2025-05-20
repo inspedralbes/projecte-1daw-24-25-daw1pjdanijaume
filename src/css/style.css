@@ -162,18 +162,22 @@ img {
 }
 
 .boton {
-    width: 170px;
-    height: 45px;
+    width: 200px;
+    height: 65px;
     font-size: 15px;
-    padding: 50% 15%;
+    padding: 20px 60px 20px 60px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
     background-color: #607d8b;
     color: white;
+    align-content: center;
+    text-align: center;
     align-self: center;
     text-decoration: none;
+    display: inline-block;
+
 }
 
 .boton-secundario {

@@ -1,4 +1,13 @@
-    <?php require_once 'connexio.php'; ?>
+    <?php require_once 'connexio.php';
+    #include "funcioMongo.php";
+
+     #   $Usuari = 'Admin';
+      #  $data = date('Y-m-d H:i:s');
+       # $ipUsuari = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+        #$paginaUsuari = 'Llistat Tècnics';
+
+        #insertLogs($collection, $Usuari, $data, $ipUsuari, $paginaUsuari);
+    ?>
 
     <!DOCTYPE html>
     <html lang="ca">

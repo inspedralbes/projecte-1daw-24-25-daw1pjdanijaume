@@ -1,4 +1,5 @@
-    <?php require_once 'connexio.php'; ?>
+    <?php require_once 'connexio.php';
+    ?>
 
     <!DOCTYPE html>
     <html lang="ca">
