@@ -31,7 +31,7 @@ $ID_Incidencia = $_GET["ID_Incidencia"] ?? null;
      <body>
          <header>
         <a href="https://www.institutpedralbes.cat/">
-          <img src="../img/logo.png" alt="Ins Pedralbes" />
+          <img src="../img/logo.png" alt="Ins Pedralbes">
         </a>
         <h1 class="titulo-sitio">Gestió d'Incidències</h1>
       </header>
@@ -104,7 +104,7 @@ $ID_Incidencia = $_GET["ID_Incidencia"] ?? null;
 <html lang="ca">
  <header>
         <a href="https://www.institutpedralbes.cat/">
-          <img src="../img/logo.png" alt="Ins Pedralbes" />
+          <img src="../img/logo.png" alt="Ins Pedralbes">
         </a>
         <h1 class="titulo-sitio">Gestió d'Incidències</h1>
       </header>
@@ -133,9 +133,7 @@ $ID_Incidencia = $_GET["ID_Incidencia"] ?? null;
         <p><strong>ID_Tecnic:</strong> <?= isset($incidencia['ID_Tecnic']) && $incidencia['ID_Tecnic'] !== null ? htmlspecialchars($incidencia['ID_Tecnic']) : "Encara no assignat" ?></p>
         <h4>Aquesta incidència ja està resolta, vols tancarla definitivament?<h4>
         <div class="centrado">
-        <a href="./afegirActuacio.php">
-               <button class="boton" id="centrado" type="submit" name="tancament">Tancar incidència</button>
-        </a>
+        <a href="./afegirActuacio.php" class="boton" id="centrado" type="submit" name="tancament">Tancar incidència</a>
     </div>
 </section>
 

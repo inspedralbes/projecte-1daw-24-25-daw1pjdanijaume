@@ -13,7 +13,7 @@
     <body>
       <header>
         <a href="https://www.institutpedralbes.cat/">
-          <img src="../img/logo.png" alt="Ins Pedralbes" />
+          <img src="../img/logo.png" alt="Ins Pedralbes">
         </a>
         <h1 class="titulo-sitio">Gestió d'Incidències</h1>
       </header>

@@ -89,8 +89,7 @@ if ($ID_Incidencia) {
             </div>
         </div>
         <div class="alineados">
-                <a href="llistatActuacions.php?ID_Incidencia=<?= htmlspecialchars($fila['ID_Incidencia']) ?>">
-                <button class="boton" id="centrado" type="submit" name="llistaActuacions">Actuacions de la incidència</button></a>
+                <a href="llistatActuacions.php?ID_Incidencia=<?= htmlspecialchars($fila['ID_Incidencia']) ?>" class="boton" id="centrado" type="submit" name="llistaActuacions">Actuacions de la incidència</a>
                 <form action="afegirActuacio.php" method="POST">
                     <input type="hidden" name="ID_Incidencia" value="<?= htmlspecialchars($fila['ID_Incidencia']) ?>">
                     <button class="boton" id="centrado" type="submit">Afegir actuació</button>

@@ -108,7 +108,7 @@ if ($Temps < 1) {
 <body>
 <header>
         <a href="https://www.institutpedralbes.cat/">
-          <img src="../img/logo.png" alt="Ins Pedralbes" />
+          <img src="../img/logo.png" alt="Ins Pedralbes">
         </a>
         <h1 class="titulo-sitio">Gestió d'Incidències</h1>
       </header>
@@ -145,9 +145,7 @@ if ($Temps < 1) {
               <input type="number" name="ID_Tecnic" required><br>
             </div>
 
-            <a href="./actuacioAfegida.php">
-            <button class="boton" type="submit">Guardar actuació</button>
-            </a>
+            <a href="./actuacioAfegida.php" class="boton" type="submit">Guardar actuació</a>
           </div>
         </div>
     </form>
